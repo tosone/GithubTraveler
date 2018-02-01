@@ -1,0 +1,4 @@
+package: github.com/tosone/logging
+import:
+- package: gopkg.in/natefinch/lumberjack.v2
+  version: ~2.1.0
