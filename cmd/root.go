@@ -57,6 +57,7 @@ func init() {
 
 func initConfig() {
 	viper.SetConfigType("yaml")
+	viper.SetEnvPrefix(common.EnvPrefix)
 	if dir != "" {
 		var config = path.Join(dir, common.Config)
 		if !com.IsFile(config) {
@@ -67,6 +68,7 @@ func initConfig() {
 	} else {
 		logging.Fatal("Cannot find config file. Please check.")
 	}
+	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
 		logging.Panic("Cannot find the special config file.")
 	}

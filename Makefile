@@ -3,13 +3,15 @@ GitHash    = main.GitHash=$(shell git rev-parse HEAD)
 Version    = main.Version=$(shell git describe --abbrev=0 --tags)
 Target     = $(shell basename $(abspath $(dir $$PWD)))
 
+Version   := main.Version=0.0.1
+
 all: clean mkdir drawin linux armv5 armv6 armv7
 
 mkdir:
 	mkdir release
 
 drawin:
-	GOOS=darwin GOARCH=amd64 go build -v -o release/${Target}-drawin -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
+	GOOS=darwin GOARCH=amd64 go build -v -o release/${Target}-drawin -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}" main.go
 
 linux:
 	GOOS=linux GOARCH=amd64 go build -v -o release/${Target}-linux -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"

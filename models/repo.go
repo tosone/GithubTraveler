@@ -4,8 +4,12 @@ import "github.com/jinzhu/gorm"
 
 type Repo struct {
 	gorm.Model
-	RepoID          string
+	RepoID          uint
 	Name            string
 	StargazersCount int
-	Raw             []byte
+}
+
+func (repo *Repo) Create() (err error) {
+	err = engine.Create(repo).Error
+	return
 }
