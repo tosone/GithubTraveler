@@ -30,8 +30,9 @@ func userCrawler() {
 		request := gorequest.New().Timeout(time.Second * time.Duration(viper.GetInt("Crawler.Timeout"))).
 			SetDebug(viper.GetBool("Crawler.Debug")).
 			Get(fmt.Sprintf("%s/users/%s/repos", common.GithubApi, user.Login)).
-			Query(fmt.Sprintf("clientid=%s", viper.GetString("ClientID"))).
-			Query(fmt.Sprintf("clientsecret=%s", viper.GetString("ClientSecret")))
+			Query(fmt.Sprintf("client_id=%s", viper.GetString("ClientID"))).
+			Query(fmt.Sprintf("client_secret=%s", viper.GetString("ClientSecret")))
+		logging.Info(viper.GetString("ClientID"), viper.GetString("ClientSecret"))
 		response, body, errs = request.End()
 		log := new(models.Log)
 		log.Url = request.Url
@@ -53,6 +54,9 @@ func userCrawler() {
 		}
 		var repos resp.Repos
 		if err = json.Unmarshal([]byte(body), &repos); err != nil {
+			logging.Error(err)
+			continue
+		} else {
 			for _, repo := range repos {
 				var r = new(models.Repo)
 				r.Name = repo.Name
