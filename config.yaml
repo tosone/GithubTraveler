@@ -3,7 +3,7 @@ ClientSecret: 8e7f4a421ce4183bcc4ffb16991942c18cd0c9b6
 Crawler:
   Entrance: tosone
   Timeout: 10
-  Debug: true
+  Debug: false
 Database:
   Engine: sqlite3
   Path: crawler.db
