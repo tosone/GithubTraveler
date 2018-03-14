@@ -5,12 +5,11 @@ package models
 import (
 	"database/sql/driver"
 	"fmt"
+	"reflect"
+	"regexp"
 	"strconv"
 	"time"
 	"unicode"
-
-	"reflect"
-	"regexp"
 
 	"github.com/jinzhu/gorm"
 	"github.com/spf13/viper"

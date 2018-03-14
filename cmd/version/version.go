@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/tosone/GithubTraveler/common"
+	"github.com/EffDataAly/GithubTraveler/common"
 )
 
 // Version version

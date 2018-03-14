@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/tosone/GithubTraveler/cmd"
-	"github.com/tosone/GithubTraveler/cmd/version"
-	"github.com/tosone/GithubTraveler/common"
+	"github.com/EffDataAly/GithubTraveler/cmd"
+	"github.com/EffDataAly/GithubTraveler/cmd/version"
+	"github.com/EffDataAly/GithubTraveler/common"
 	"github.com/tosone/logging"
 
 	_ "github.com/go-sql-driver/mysql"
