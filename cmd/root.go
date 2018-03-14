@@ -5,12 +5,12 @@ import (
 	"os"
 	"path"
 
+	"github.com/EffDataAly/GithubTraveler/cmd/crawler"
+	"github.com/EffDataAly/GithubTraveler/cmd/version"
+	"github.com/EffDataAly/GithubTraveler/common"
 	"github.com/Unknwon/com"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/tosone/GithubTraveler/cmd/crawler"
-	"github.com/tosone/GithubTraveler/cmd/version"
-	"github.com/tosone/GithubTraveler/common"
 	"github.com/tosone/logging"
 )
 

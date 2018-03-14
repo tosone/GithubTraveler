@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/EffDataAly/GithubTraveler/common"
+	"github.com/EffDataAly/GithubTraveler/common/resp"
+	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/parnurzeal/gorequest"
 	"github.com/spf13/viper"
-	"github.com/tosone/GithubTraveler/common"
-	"github.com/tosone/GithubTraveler/common/resp"
-	"github.com/tosone/GithubTraveler/models"
 	"github.com/tosone/logging"
 )
 
