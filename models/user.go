@@ -6,7 +6,7 @@ import (
 
 type User struct {
 	gorm.Model
-	UserID string
+	UserID uint
 	Login  string
 	Type   string
 }

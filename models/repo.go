@@ -6,6 +6,7 @@ import (
 
 type Repo struct {
 	gorm.Model
+	UserID          uint
 	RepoID          uint
 	Name            string
 	StargazersCount int
