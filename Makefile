@@ -30,4 +30,4 @@ authors:
 	git log --raw | grep "^Author: " | cut -d ' ' -f2- | cut -d '<' -f1 | sed 's/^/- /' | sort | uniq >> AUTHORS.md
 
 clean:
-	-rm -rf release
+	-rm -rf release *.db *.db-journal

@@ -16,3 +16,4 @@
 .idea/
 release/
 *.db
+*.db-journal
