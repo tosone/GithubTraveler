@@ -8,6 +8,9 @@ import (
 type Link map[string]string
 
 func Parse(links string) (res Link) {
+	if links == "" {
+		return
+	}
 	pagingReg := regexp.MustCompile(`rel="([a-z]+)"`)
 	linkReg := regexp.MustCompile(`<(.*)>`)
 	res = Link{}

@@ -1,13 +1,17 @@
 package crawler
 
 import (
-	"time"
+	"context"
+	"os"
+	"os/signal"
+	"sync"
 
 	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/spf13/viper"
 	"github.com/tosone/logging"
 )
 
+// Initialize initialize
 func Initialize(tags ...string) {
 	var err error
 	if err = models.Connect(); err != nil {
@@ -15,12 +19,31 @@ func Initialize(tags ...string) {
 	}
 	user := new(models.User)
 	user.Login = viper.GetString("Crawler.Entrance")
-	user.UserID = uint(viper.GetInt("Crawler.EntranceID"))
-	user.Type = viper.GetString("Crawler.EntranceType")
 	if err = user.Create(); err != nil {
 		logging.Fatal(err)
 	}
-	go userRepos()
-	go userFollowers()
-	<-time.After(time.Hour * 3)
+
+	ctx, ctxCancel := context.WithCancel(context.Background())
+	var wgAll = new(sync.WaitGroup)
+
+	go infoRepo(ctx, wgAll)
+	go infoUser(ctx, wgAll)
+
+	go userFollowers(ctx, wgAll)
+	go userFollowing(ctx, wgAll)
+	go userRepos(ctx, wgAll)
+	go userStarred(ctx, wgAll)
+	go userSubscriptions(ctx, wgAll)
+
+	go repoStargazers(ctx, wgAll)
+	go repoWatchers(ctx, wgAll)
+
+	signalChannel := make(chan os.Signal)
+	signal.Notify(signalChannel, os.Interrupt)
+	select {
+	case <-signalChannel:
+		ctxCancel()
+		wgAll.Wait()
+		logging.Info("Exit correctly already.")
+	}
 }

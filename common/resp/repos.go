@@ -4,7 +4,7 @@ import "time"
 
 // Repos https://api.github.com/users/tosone/repos
 type Repo struct {
-	ID               uint      `json:"id"`
+	ID               uint64    `json:"id"`
 	Name             string    `json:"name"`
 	FullName         string    `json:"full_name"`
 	Owner            Owner     `json:"owner"`
@@ -57,22 +57,22 @@ type Repo struct {
 	CloneURL         string    `json:"clone_url"`
 	SvnURL           string    `json:"svn_url"`
 	Homepage         *string   `json:"homepage"`
-	Size             int       `json:"size"`
-	StargazersCount  int       `json:"stargazers_count"`
-	WatchersCount    int       `json:"watchers_count"`
-	Language         string    `json:"language"`
+	Size             uint64    `json:"size"`
+	StargazersCount  uint64    `json:"stargazers_count"`
+	WatchersCount    uint64    `json:"watchers_count"`
+	Language         *string   `json:"language"`
 	HasIssues        bool      `json:"has_issues"`
 	HasProjects      bool      `json:"has_projects"`
 	HasDownloads     bool      `json:"has_downloads"`
 	HasWiki          bool      `json:"has_wiki"`
 	HasPages         bool      `json:"has_pages"`
-	ForksCount       int       `json:"forks_count"`
+	ForksCount       uint64    `json:"forks_count"`
 	MirrorURL        *string   `json:"mirror_url"`
 	Archived         bool      `json:"archived"`
-	OpenIssuesCount  int       `json:"open_issues_count"`
-	License          License   `json:"license"`
-	Forks            int       `json:"forks"`
-	OpenIssues       int       `json:"open_issues"`
-	Watchers         int       `json:"watchers"`
+	OpenIssuesCount  uint      `json:"open_issues_count"`
+	License          *License  `json:"license"`
+	Forks            uint64    `json:"forks"`
+	OpenIssues       uint64    `json:"open_issues"`
+	Watchers         uint64    `json:"watchers"`
 	DefaultBranch    string    `json:"default_branch"`
 }

@@ -4,9 +4,10 @@ import "github.com/jinzhu/gorm"
 
 type Log struct {
 	gorm.Model
+	Type     string
 	Method   string
 	Url      string
-	Response []byte
+	Response []byte `gorm:"size:65535"`
 	ErrMsg   []byte
 }
 

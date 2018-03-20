@@ -6,9 +6,13 @@ import (
 
 type User struct {
 	gorm.Model
-	UserID uint
-	Login  string
-	Type   string
+	UserID    uint64
+	Login     string
+	Type      string
+	Location  string
+	Email     string
+	Followers string
+	Following string
 }
 
 func (user *User) IsEmpty() (isEmpty bool, err error) {
@@ -41,6 +45,12 @@ func (user *User) FindByID(id uint) (u *User, err error) {
 	return
 }
 
+func (user *User) FindByUserID(id uint64) (u *User, err error) {
+	u = new(User)
+	err = engine.Where(&User{UserID: id}).Find(u).Error
+	return
+}
+
 func (user *User) IsExist() (isExist bool, err error) {
 	var count int
 	if err = engine.Model(new(User)).Where(User{Login: user.Login}).Count(&count).Error; err != nil {
@@ -54,6 +64,5 @@ func (user *User) IsExist() (isExist bool, err error) {
 }
 
 func (user *User) Update() (err error) {
-	err = engine.Model(new(Repo)).Where(User{Login: user.Login}).Updates(user).Error
-	return
+	return engine.Model(new(User)).Where(User{Login: user.Login}).Updates(user).Error
 }

@@ -6,10 +6,28 @@ import (
 
 type Repo struct {
 	gorm.Model
-	UserID          uint
-	RepoID          uint
-	Name            string
-	StargazersCount int
+	UserID      uint64
+	RepoID      uint64
+	Name        string
+	Homepage    string
+	Language    string
+	Size        uint64
+	Licence     string
+	Description string
+	Stargazers  string
+	Watchers    string
+}
+
+func (repo *Repo) IsEmpty() (isEmpty bool, err error) {
+	var count int
+	if err = engine.Model(new(Repo)).Count(&count).Error; err != nil {
+		return
+	}
+	if count != 0 {
+		isEmpty = false
+	}
+	isEmpty = true
+	return
 }
 
 func (repo *Repo) Create() (err error) {
@@ -24,9 +42,15 @@ func (repo *Repo) Create() (err error) {
 	return
 }
 
+func (repo *Repo) FindByID(id uint) (u *Repo, err error) {
+	u = new(Repo)
+	err = engine.Find(u, id).Error
+	return
+}
+
 func (repo *Repo) IsExist() (isExist bool, err error) {
 	var count int
-	if err = engine.Model(new(Repo)).Where(Repo{RepoID: repo.RepoID}).Count(&count).Error; err != nil {
+	if err = engine.Model(new(Repo)).Where(Repo{UserID: repo.UserID, RepoID: repo.RepoID}).Count(&count).Error; err != nil {
 		return
 	}
 	if count != 0 {
@@ -37,6 +61,5 @@ func (repo *Repo) IsExist() (isExist bool, err error) {
 }
 
 func (repo *Repo) Update() (err error) {
-	err = engine.Model(new(Repo)).Where(Repo{RepoID: repo.RepoID}).Updates(repo).Error
-	return
+	return engine.Model(new(Repo)).Where(Repo{UserID: repo.UserID, RepoID: repo.RepoID}).Updates(repo).Error
 }
