@@ -2,7 +2,7 @@ package resp
 
 type Owner struct {
 	Login             string `json:"login"`
-	ID                uint   `json:"id"`
+	ID                uint64 `json:"id"`
 	AvatarURL         string `json:"avatar_url"`
 	GravatarID        string `json:"gravatar_id"`
 	URL               string `json:"url"`

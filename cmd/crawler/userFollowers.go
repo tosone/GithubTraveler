@@ -1,10 +1,12 @@
 package crawler
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/url"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/EffDataAly/GithubTraveler/common"
@@ -12,27 +14,41 @@ import (
 	"github.com/EffDataAly/GithubTraveler/common/resp"
 	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/parnurzeal/gorequest"
+	"github.com/satori/go.uuid"
 	"github.com/spf13/viper"
 	"github.com/tosone/logging"
 )
 
 // userFollowers get all of info from username
-func userFollowers() {
+func userFollowers(ctx context.Context, wg *sync.WaitGroup) {
+	const crawlerName = "userFollowers"
+	wg.Add(1)
+	defer wg.Done()
+
 	var response gorequest.Response
 	var body string
 	var errs []error
 	var err error
 	var num uint
 	for {
+		select {
+		case <-ctx.Done():
+			return
+		default:
+		}
 		num++
 		var user = new(models.User)
 		if user, err = new(models.User).FindByID(num); err != nil {
 			num = 0
 			continue
 		}
+		var followersVersion = uuid.NewV4()
+		user.Followers = followersVersion.String()
+
 		var nextUrl = "next"
 		var ok bool
 		var page = 1
+
 		for nextUrl != "" {
 			request := gorequest.New().Timeout(time.Second * time.Duration(viper.GetInt("Crawler.Timeout"))).
 				SetDebug(viper.GetBool("Crawler.Debug")).
@@ -56,6 +72,7 @@ func userFollowers() {
 			log.Url = request.Url
 			log.Method = request.Method
 			log.Response = []byte(body)
+			log.Type = crawlerName
 			if len(errs) != 0 {
 				var errMsg string
 				for _, err := range errs {
@@ -84,8 +101,25 @@ func userFollowers() {
 						logging.Error(err)
 						continue
 					}
+					var reliableFollowers = new(models.UserFollowers)
+					reliableFollowers.UserID = user.UserID
+					reliableFollowers.Version = followersVersion.String()
+					reliableFollowers.FollowerUserID = u.UserID
+					if err = reliableFollowers.Create(); err != nil {
+						logging.Error(err)
+						continue
+					}
+					select {
+					case <-ctx.Done():
+						return
+					default:
+					}
 				}
 			}
+		}
+
+		if err = user.Update(); err != nil {
+			logging.Error(err)
 		}
 	}
 }

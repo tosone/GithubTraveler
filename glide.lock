@@ -1,15 +1,16 @@
-hash: 17f8df5abc2995d0dc07587c6ea9db5ae0122cb675f63be11f6f439d3c3a5c8e
-updated: 2018-03-20T00:33:52.713834077+08:00
+hash: 45c08af56133ff894a3519ad9b34d9a9020dff4e9a3e36663bb075630b0dda27
+updated: 2018-03-25T22:48:58.917303543+08:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9
 - name: github.com/go-sql-driver/mysql
   version: a0583e0143b1624142adab07e0e97fe106d99561
 - name: github.com/hashicorp/hcl
-  version: 23c074d0eceb2b8a5bfdbb271ab780cde70f05a8
+  version: f40e974e75af4e271d97ce0fc917af5898ae7bda
   subpackages:
   - hcl/ast
   - hcl/parser
+  - hcl/printer
   - hcl/scanner
   - hcl/strconv
   - hcl/token
@@ -19,11 +20,11 @@ imports:
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
 - name: github.com/jinzhu/gorm
-  version: 5174cc5c242a728b435ea2be8a2f7f998e15429b
+  version: 6ed508ec6a4ecb3531899a69cbc746ccf65a4166
 - name: github.com/jinzhu/inflection
   version: 04140366298a54a039076d798123ffa108fff46c
 - name: github.com/lib/pq
-  version: 88edab0803230a3898347e77b474f8c1820a1f20
+  version: b2004221932bd6b13167ef654c81cffac36f7537
   subpackages:
   - oid
 - name: github.com/magiconair/properties
@@ -37,11 +38,13 @@ imports:
 - name: github.com/parnurzeal/gorequest
   version: a578a48e8d6ca8b01a3b18314c43c6716bb5f5a3
 - name: github.com/pelletier/go-toml
-  version: 05bcc0fb0d3e60da4b8dd5bd7e0ea563eb4ca943
+  version: 66540cf1fcd2c3aee6f6787dfa32a6ae9a870f12
 - name: github.com/pkg/errors
   version: 816c9085562cd7ee03e7f8188a1cfd942858cded
+- name: github.com/satori/go.uuid
+  version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
 - name: github.com/spf13/afero
-  version: bbf41cb36dffe15dff5bf7e18c447801e7ffe163
+  version: a880a37ed1804d98f64b3b7d58b5e3f8fbf421c4
   subpackages:
   - mem
 - name: github.com/spf13/cast
@@ -53,21 +56,21 @@ imports:
 - name: github.com/spf13/pflag
   version: ee5fd03fd6acfd43e44aea0b4135958546ed8e73
 - name: github.com/spf13/viper
-  version: 25b30aa063fc18e48662b86996252eabdcf2f0c7
+  version: b5e8006cbee93ec955a89ab31e0e3ce3204f3736
 - name: github.com/tosone/logging
   version: 015eb1d0fe2a14cd62fe69346b87b8fe52d111c9
 - name: github.com/Unknwon/com
   version: 28b053d5a2923b87ce8c5a08f3af779894a72758
 - name: golang.org/x/net
-  version: 92b859f39abd2d91a854c9f9c4621b2f5054a92d
+  version: 6078986fec03a1dcc236c34816c71b0e05018fda
   subpackages:
   - publicsuffix
 - name: golang.org/x/sys
-  version: d8e400bc7db4870d786864138af681469693d18c
+  version: 91ee8cde435411ca3f1cd365e8f20131aed4d0a1
   subpackages:
   - unix
 - name: golang.org/x/text
-  version: 8c34f848e18c4bd34d02db7f19a0ed1a0a8f5852
+  version: ab48842968a66deafa354805a8b031924668e059
   subpackages:
   - transform
   - unicode/norm

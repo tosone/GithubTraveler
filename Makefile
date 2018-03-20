@@ -1,9 +1,7 @@
 BuildStamp = main.BuildStamp=$(shell date '+%Y-%m-%d_%I:%M:%S%p')
 GitHash    = main.GitHash=$(shell git rev-parse HEAD)
-Version    = main.Version=$(shell git describe --abbrev=0 --tags)
+Version    = main.Version=$(shell git describe --abbrev=0 --tags --always)
 Target     = $(shell basename $(abspath $(dir $$PWD)))
-
-Version   := main.Version=0.0.1
 
 all: clean mkdir drawin linux armv5 armv6 armv7
 
