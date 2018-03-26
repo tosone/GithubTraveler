@@ -1,0 +1,7 @@
+language: go
+go: '1.10.0'
+script: make
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: make linux
