@@ -2,7 +2,7 @@ package resp
 
 import "time"
 
-// Repos https://api.github.com/users/tosone/repos
+// Repo https://api.github.com/users/tosone/repos
 type Repo struct {
 	ID               uint64    `json:"id"`
 	Name             string    `json:"name"`

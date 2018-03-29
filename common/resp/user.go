@@ -2,6 +2,7 @@ package resp
 
 import "time"
 
+// User ..
 type User struct {
 	Login             string      `json:"login"`
 	UserID            uint64      `json:"id"`

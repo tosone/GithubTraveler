@@ -2,6 +2,7 @@ package models
 
 import "github.com/jinzhu/gorm"
 
+// HistoryRepoWatchersNum ..
 type HistoryRepoWatchersNum struct {
 	gorm.Model
 	UserID      uint64
@@ -9,6 +10,7 @@ type HistoryRepoWatchersNum struct {
 	WatchersNum uint64
 }
 
+// Create ..
 func (s *HistoryRepoWatchersNum) Create() error {
 	return engine.Create(s).Error
 }

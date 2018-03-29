@@ -27,6 +27,7 @@ func isPrintable(s string) bool {
 var sqlRegexp = regexp.MustCompile(`\?`)
 var numericPlaceHolderRegexp = regexp.MustCompile(`\$\d+`)
 
+// Print ..
 func (logger Logger) Print(values ...interface{}) {
 	var formattedValues []string
 	var sql string
