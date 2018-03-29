@@ -1,5 +1,5 @@
 hash: 45c08af56133ff894a3519ad9b34d9a9020dff4e9a3e36663bb075630b0dda27
-updated: 2018-03-25T22:48:58.917303543+08:00
+updated: 2018-03-29T21:01:01.840436591+08:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9
@@ -24,7 +24,7 @@ imports:
 - name: github.com/jinzhu/inflection
   version: 04140366298a54a039076d798123ffa108fff46c
 - name: github.com/lib/pq
-  version: b2004221932bd6b13167ef654c81cffac36f7537
+  version: d34b9ff171c21ad295489235aec8b6626023cd04
   subpackages:
   - oid
 - name: github.com/magiconair/properties
@@ -54,7 +54,7 @@ imports:
 - name: github.com/spf13/jwalterweatherman
   version: 7c0cea34c8ece3fbeb2b27ab9b59511d360fb394
 - name: github.com/spf13/pflag
-  version: ee5fd03fd6acfd43e44aea0b4135958546ed8e73
+  version: ad68c28ee799163e627e77fcc6e8ecaa866e3535
 - name: github.com/spf13/viper
   version: b5e8006cbee93ec955a89ab31e0e3ce3204f3736
 - name: github.com/tosone/logging
@@ -66,16 +66,16 @@ imports:
   subpackages:
   - publicsuffix
 - name: golang.org/x/sys
-  version: 91ee8cde435411ca3f1cd365e8f20131aed4d0a1
+  version: 13d03a9a82fba647c21a0ef8fba44a795d0f0835
   subpackages:
   - unix
 - name: golang.org/x/text
-  version: ab48842968a66deafa354805a8b031924668e059
+  version: ece95c760240037f89ebcbdd7155ac8cb52e38fa
   subpackages:
   - transform
   - unicode/norm
 - name: gopkg.in/natefinch/lumberjack.v2
   version: a96e63847dc3c67d17befa69c303767e2f84e54f
 - name: gopkg.in/yaml.v2
-  version: 7f97868eec74b32b0982dd158a51a446d1da7eb5
+  version: 5420a8b6744d3b0345ab293f6fcba19c978f1183
 testImports: []
