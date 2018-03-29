@@ -10,6 +10,7 @@ import (
 	"github.com/EffDataAly/GithubTraveler/common"
 	"github.com/EffDataAly/GithubTraveler/common/resp"
 	"github.com/EffDataAly/GithubTraveler/models"
+	"github.com/jinzhu/gorm"
 	"github.com/parnurzeal/gorequest"
 	"github.com/satori/go.uuid"
 	"github.com/spf13/viper"
@@ -35,6 +36,9 @@ func repoStargazers(ctx context.Context, wg *sync.WaitGroup) {
 		num++
 		var repo = new(models.Repo)
 		if repo, err = new(models.Repo).FindByID(num); err != nil {
+			if err == gorm.ErrRecordNotFound && num == 1 {
+				time.Sleep(time.Second * 30)
+			}
 			num = 0
 			continue
 		}
@@ -42,6 +46,7 @@ func repoStargazers(ctx context.Context, wg *sync.WaitGroup) {
 		repo.Stargazers = stargazersVersion.String()
 
 		if repo.UserID == 0 {
+			time.Sleep(time.Second * 10)
 			continue
 		}
 
