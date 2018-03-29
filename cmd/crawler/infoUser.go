@@ -45,7 +45,7 @@ func infoUser(ctx context.Context, wg *sync.WaitGroup) {
 			Query(fmt.Sprintf("client_secret=%s", viper.GetString("ClientSecret")))
 		response, body, errs = request.End()
 		log := new(models.Log)
-		log.Url = request.Url
+		log.URL = request.Url
 		log.Method = request.Method
 		log.Response = []byte(body)
 		log.Type = crawlerName

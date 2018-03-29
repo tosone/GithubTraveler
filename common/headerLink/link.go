@@ -5,8 +5,10 @@ import (
 	"strings"
 )
 
+// Link ..
 type Link map[string]string
 
+// Parse ..
 func Parse(links string) (res Link) {
 	if links == "" {
 		return

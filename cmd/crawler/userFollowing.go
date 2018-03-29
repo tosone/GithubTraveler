@@ -44,10 +44,10 @@ func userFollowing(ctx context.Context, wg *sync.WaitGroup) {
 		var followingVersion = uuid.NewV4()
 		user.Following = followingVersion.String()
 
-		var nextUrl = "next"
+		var nextURL = "next"
 		var ok bool
 		var page = 1
-		for nextUrl != "" {
+		for nextURL != "" {
 			request := gorequest.New().Timeout(time.Second * time.Duration(viper.GetInt("Crawler.Timeout"))).
 				SetDebug(viper.GetBool("Crawler.Debug")).
 				Get(fmt.Sprintf("%s/users/%s/following", common.GithubApi, user.Login)).
@@ -55,8 +55,8 @@ func userFollowing(ctx context.Context, wg *sync.WaitGroup) {
 				Query(fmt.Sprintf("client_secret=%s", viper.GetString("ClientSecret"))).
 				Query(fmt.Sprintf("page=%d", page))
 			response, body, errs = request.End()
-			if nextUrl, ok = headerLink.Parse(response.Header.Get("Link"))["next"]; ok {
-				if u, err := url.Parse(nextUrl); err != nil {
+			if nextURL, ok = headerLink.Parse(response.Header.Get("Link"))["next"]; ok {
+				if u, err := url.Parse(nextURL); err != nil {
 					logging.Error(err)
 				} else {
 					if page, err = strconv.Atoi(u.Query().Get("page")); err != nil {
@@ -64,10 +64,10 @@ func userFollowing(ctx context.Context, wg *sync.WaitGroup) {
 					}
 				}
 			} else {
-				nextUrl = ""
+				nextURL = ""
 			}
 			log := new(models.Log)
-			log.Url = request.Url
+			log.URL = request.Url
 			log.Method = request.Method
 			log.Response = []byte(body)
 			log.Type = crawlerName

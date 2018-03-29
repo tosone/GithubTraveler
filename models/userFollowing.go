@@ -2,6 +2,7 @@ package models
 
 import "github.com/jinzhu/gorm"
 
+// UserFollowing ..
 type UserFollowing struct {
 	gorm.Model
 	UserID          uint64
@@ -9,6 +10,7 @@ type UserFollowing struct {
 	FollowingUserID uint64
 }
 
+// Create ..
 func (f *UserFollowing) Create() (err error) {
 	var isExist bool
 	if isExist, err = f.IsExist(); err != nil {
@@ -21,6 +23,7 @@ func (f *UserFollowing) Create() (err error) {
 	return
 }
 
+// IsExist ..
 func (f *UserFollowing) IsExist() (isExist bool, err error) {
 	var count int
 	if err = engine.Model(new(UserFollowing)).
@@ -35,6 +38,7 @@ func (f *UserFollowing) IsExist() (isExist bool, err error) {
 	return
 }
 
+// Update ..
 func (f *UserFollowing) Update() (err error) {
 	return
 }

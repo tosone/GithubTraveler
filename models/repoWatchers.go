@@ -2,7 +2,7 @@ package models
 
 import "github.com/jinzhu/gorm"
 
-// Starred followers
+// RepoWatchers followers
 type RepoWatchers struct {
 	gorm.Model
 	UserID  uint64
@@ -10,6 +10,7 @@ type RepoWatchers struct {
 	RepoID  uint64
 }
 
+// Create ..
 func (f *RepoWatchers) Create() (err error) {
 	var isExist bool
 	if isExist, err = f.IsExist(); err != nil {
@@ -22,6 +23,7 @@ func (f *RepoWatchers) Create() (err error) {
 	return
 }
 
+// IsExist ..
 func (f *RepoWatchers) IsExist() (isExist bool, err error) {
 	var count int
 	if err = engine.Model(new(RepoWatchers)).
@@ -36,6 +38,7 @@ func (f *RepoWatchers) IsExist() (isExist bool, err error) {
 	return
 }
 
+// Update ..
 func (f *RepoWatchers) Update() (err error) {
 	return
 }

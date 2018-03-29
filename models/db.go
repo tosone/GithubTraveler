@@ -20,7 +20,7 @@ var engine *gorm.DB
 func Connect() (err error) {
 	var dialString string
 	if viper.GetString("Database.Engine") == "sqlite3" {
-		dialString = viper.GetString("Database.Path")
+		dialString = viper.GetString("Database.Path") + "?_busy_timeout=20000"
 	} else if viper.GetString("Database.Engine") == "mysql" {
 		dialString = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
 			viper.GetString("Database.Username"),
@@ -82,6 +82,7 @@ func isPrintable(s string) bool {
 var sqlRegexp = regexp.MustCompile(`\?`)
 var numericPlaceHolderRegexp = regexp.MustCompile(`\$\d+`)
 
+// Print ..
 func (logger Logger) Print(values ...interface{}) {
 	var formattedValues []string
 	var sql string

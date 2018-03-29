@@ -4,7 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// Followers followers
+// UserFollowers followers
 type UserFollowers struct {
 	gorm.Model
 	UserID         uint64
@@ -12,6 +12,7 @@ type UserFollowers struct {
 	FollowerUserID uint64
 }
 
+// Create ..
 func (f *UserFollowers) Create() (err error) {
 	var isExist bool
 	if isExist, err = f.IsExist(); err != nil {
@@ -24,6 +25,7 @@ func (f *UserFollowers) Create() (err error) {
 	return
 }
 
+// IsExist ..
 func (f *UserFollowers) IsExist() (isExist bool, err error) {
 	var count int
 	if err = engine.Model(new(UserFollowers)).
@@ -38,6 +40,7 @@ func (f *UserFollowers) IsExist() (isExist bool, err error) {
 	return
 }
 
+// Update ..
 func (f *UserFollowers) Update() (err error) {
 	return
 }
