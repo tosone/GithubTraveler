@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// User ..
 type User struct {
 	gorm.Model
 	UserID    uint64
@@ -15,6 +16,7 @@ type User struct {
 	Following string
 }
 
+// IsEmpty ..
 func (user *User) IsEmpty() (isEmpty bool, err error) {
 	var count int
 	if err = engine.Model(new(User)).Count(&count).Error; err != nil {
@@ -27,6 +29,7 @@ func (user *User) IsEmpty() (isEmpty bool, err error) {
 	return
 }
 
+// Create ..
 func (user *User) Create() (err error) {
 	var isExist bool
 	if isExist, err = user.IsExist(); err != nil {
@@ -39,18 +42,21 @@ func (user *User) Create() (err error) {
 	return
 }
 
+// FindByID ..
 func (user *User) FindByID(id uint) (u *User, err error) {
 	u = new(User)
 	err = engine.Find(u, id).Error
 	return
 }
 
+// FindByUserID ..
 func (user *User) FindByUserID(id uint64) (u *User, err error) {
 	u = new(User)
 	err = engine.Where(&User{UserID: id}).Find(u).Error
 	return
 }
 
+// IsExist ..
 func (user *User) IsExist() (isExist bool, err error) {
 	var count int
 	if err = engine.Model(new(User)).Where(User{Login: user.Login}).Count(&count).Error; err != nil {
@@ -63,6 +69,7 @@ func (user *User) IsExist() (isExist bool, err error) {
 	return
 }
 
+// Update ..
 func (user *User) Update() (err error) {
 	return engine.Model(new(User)).Where(User{Login: user.Login}).Updates(user).Error
 }

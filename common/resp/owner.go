@@ -1,5 +1,6 @@
 package resp
 
+// Owner ..
 type Owner struct {
 	Login             string `json:"login"`
 	ID                uint64 `json:"id"`
