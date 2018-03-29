@@ -1,14 +1,15 @@
-ClientID: 3d032602cc3318f720bf
-ClientSecret: 8e7f4a421ce4183bcc4ffb16991942c18cd0c9b6
+ClientID: 3d032602cc3318f720bf # github app client ID
+ClientSecret: 8e7f4a421ce4183bcc4ffb16991942c18cd0c9b6 # github app client secret
 Crawler:
-  Entrance: tosone
-  Timeout: 10
-  Debug: true
+  Entrance: tosone # crawler entrance that one of github user
+  Timeout: 10 # request github timeout
+  Debug: true # debug all the request verbose info
+  ItemOutDate: 24 # Item that request another time
 Database:
-  Engine: sqlite3
-  Path: crawler.db
-  Username: root
-  Password: 8541539655
-  Host: 47.96.4.22
+  Engine: mysql # DB type
+  Path: /data/crawler.db # database path
+  Username: tosone
+  Password: Password
+  Host: 47.47.47.47
   Port: 3306
-  Database: code
+  Database: github_traveler

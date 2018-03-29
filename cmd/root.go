@@ -1,10 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-	"path"
-
 	"github.com/EffDataAly/GithubTraveler/cmd/crawler"
 	"github.com/EffDataAly/GithubTraveler/cmd/version"
 	"github.com/EffDataAly/GithubTraveler/common"
@@ -14,7 +10,7 @@ import (
 	"github.com/tosone/logging"
 )
 
-var dir string
+var config string
 
 // RootCmd represents the base command when called without any sub commands
 var RootCmd = &cobra.Command{
@@ -44,12 +40,7 @@ var crawlerCmd = &cobra.Command{
 }
 
 func init() {
-	var err error
-	var currPath string
-	if currPath, err = os.Getwd(); err != nil {
-		logging.Fatal(err)
-	}
-	crawlerCmd.PersistentFlags().StringVarP(&dir, "dir", "d", currPath, "execute path")
+	crawlerCmd.PersistentFlags().StringVarP(&config, "config", "c", "", "execute path")
 
 	RootCmd.AddCommand(crawlerCmd)
 	RootCmd.AddCommand(versionCmd)
@@ -58,13 +49,11 @@ func init() {
 func initConfig() {
 	viper.SetConfigType("yaml")
 	viper.SetEnvPrefix(common.EnvPrefix)
-	if dir != "" {
-		var config = path.Join(dir, common.Config)
-		if !com.IsFile(config) {
-			logging.Fatal(fmt.Sprintf("Cannot find config file here: %s", config))
-		} else {
-			viper.SetConfigFile(config)
-		}
+	if config == "" {
+		config = "./config.yaml"
+	}
+	if com.IsFile(config) {
+		viper.SetConfigFile(config)
 	} else {
 		logging.Fatal("Cannot find config file. Please check.")
 	}
