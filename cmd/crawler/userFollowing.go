@@ -13,6 +13,7 @@ import (
 	"github.com/EffDataAly/GithubTraveler/common/headerLink"
 	"github.com/EffDataAly/GithubTraveler/common/resp"
 	"github.com/EffDataAly/GithubTraveler/models"
+	"github.com/jinzhu/gorm"
 	"github.com/parnurzeal/gorequest"
 	"github.com/satori/go.uuid"
 	"github.com/spf13/viper"
@@ -38,6 +39,9 @@ func userFollowing(ctx context.Context, wg *sync.WaitGroup) {
 		num++
 		var user = new(models.User)
 		if user, err = new(models.User).FindByID(num); err != nil {
+			if err == gorm.ErrRecordNotFound && num == 1 {
+				time.Sleep(time.Second * 30)
+			}
 			num = 0
 			continue
 		}

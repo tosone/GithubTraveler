@@ -20,7 +20,7 @@ var engine *gorm.DB
 func Connect() (err error) {
 	var dialString string
 	if viper.GetString("Database.Engine") == "sqlite3" {
-		dialString = viper.GetString("Database.Path") + "?_busy_timeout=20000"
+		dialString = viper.GetString("Database.Path") + "?_busy_timeout=10000&_txlock=immediate"
 	} else if viper.GetString("Database.Engine") == "mysql" {
 		dialString = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
 			viper.GetString("Database.Username"),

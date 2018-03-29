@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -51,8 +53,12 @@ func (user *User) FindByID(id uint) (u *User, err error) {
 
 // FindByUserID ..
 func (user *User) FindByUserID(id uint64) (u *User, err error) {
+	if id == 0 {
+		err = errors.New("cannot find record with user ID 0")
+		return
+	}
 	u = new(User)
-	err = engine.Where(&User{UserID: id}).Find(u).Error
+	err = engine.Find(u, User{UserID: id}).Error
 	return
 }
 
