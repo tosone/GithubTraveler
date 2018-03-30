@@ -25,7 +25,7 @@ func Setting(version, buildStamp, gitHash string) {
 
 // Initialize ..
 func Initialize() {
-	fmt.Printf("%s %s/%s\n", common.AppName, runtime.GOOS, runtime.GOARCH)
+	fmt.Printf("%s %s/%s %s\n", common.AppName, runtime.GOOS, runtime.GOARCH, runtime.Version())
 	fmt.Printf("Version: %s\n", Version)
 	fmt.Printf("BuildDate: %s\n", BuildStamp)
 	fmt.Printf("BuildHash: %s\n", GitHash)
