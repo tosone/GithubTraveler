@@ -1,5 +1,5 @@
 hash: 45c08af56133ff894a3519ad9b34d9a9020dff4e9a3e36663bb075630b0dda27
-updated: 2018-03-29T21:01:01.840436591+08:00
+updated: 2018-03-30T11:33:09.75462735+08:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9
@@ -50,7 +50,7 @@ imports:
 - name: github.com/spf13/cast
   version: 8965335b8c7107321228e3e3702cab9832751bac
 - name: github.com/spf13/cobra
-  version: 7b2c5ac9fc04fc5efafb60700713d4fa609b777b
+  version: a1f051bc3eba734da4772d60e2d677f47cf93ef4
 - name: github.com/spf13/jwalterweatherman
   version: 7c0cea34c8ece3fbeb2b27ab9b59511d360fb394
 - name: github.com/spf13/pflag
@@ -66,7 +66,7 @@ imports:
   subpackages:
   - publicsuffix
 - name: golang.org/x/sys
-  version: 13d03a9a82fba647c21a0ef8fba44a795d0f0835
+  version: 378d26f46672a356c46195c28f61bdb4c0a781dd
   subpackages:
   - unix
 - name: golang.org/x/text
