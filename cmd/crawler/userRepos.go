@@ -40,9 +40,13 @@ func userRepos(ctx context.Context, wg *sync.WaitGroup) {
 		var user = new(models.User)
 		if user, err = new(models.User).FindByID(num); err != nil {
 			if err == gorm.ErrRecordNotFound && num == 1 {
-				time.Sleep(time.Second * 30)
+				time.Sleep(time.Second * time.Duration(viper.GetInt("Crawler.WaitDataReady")))
 			}
 			num = 0
+			continue
+		}
+		if user.UserID == 0 {
+			time.Sleep(time.Second * time.Duration(viper.GetInt("Crawler.WaitDataReady")))
 			continue
 		}
 

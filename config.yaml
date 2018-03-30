@@ -4,10 +4,11 @@ Crawler:
   Entrance: tosone # crawler entrance that one of github user
   Timeout: 10 # request github timeout
   Debug: true # debug all the request verbose info
-  ItemOutDate: 24 # Item that request another time
+  ItemOutDate: 24 # Item that request another time (h)
+  WaitDataReady: 10 # Wait for data is ready for handle (s)
 Database:
-  Engine: mysql # DB type
-  Path: /data/crawler.db # database path
+  Engine: sqlite3 # DB type
+  Path: crawler.db # database path
   Username: tosone
   Password: Password
   Host: 47.47.47.47
