@@ -19,9 +19,10 @@ var engine *gorm.DB
 // Connect connect to the database
 func Connect() (err error) {
 	var dialString string
-	if viper.GetString("Database.Engine") == "sqlite3" {
+	var engineType = viper.GetString("Database.Engine")
+	if engineType == "sqlite3" {
 		dialString = viper.GetString("Database.Path") + "?_busy_timeout=10000&_txlock=immediate"
-	} else if viper.GetString("Database.Engine") == "mysql" {
+	} else if engineType == "mysql" {
 		dialString = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
 			viper.GetString("Database.Username"),
 			viper.GetString("Database.Password"),
@@ -29,18 +30,22 @@ func Connect() (err error) {
 			viper.GetString("Database.Port"),
 			viper.GetString("Database.Database"),
 		)
-	} else {
-		dialString = fmt.Sprintf("%s:%s@%s:%s/%s",
+	} else if engineType == "postgres" {
+		dialString = fmt.Sprintf("%s://%s:%s@%s:%s/%s?sslmode=%s",
+			engineType,
 			viper.GetString("Database.Username"),
 			viper.GetString("Database.Password"),
 			viper.GetString("Database.Host"),
 			viper.GetString("Database.Port"),
 			viper.GetString("Database.Database"),
+			viper.GetString("Database.SSLMode"),
 		)
+	} else {
+		logging.Fatal(fmt.Sprintf("Not support this database: %s", engineType))
 	}
 
-	if engine, err = gorm.Open(viper.GetString("Database.Engine"), dialString); err != nil {
-		logging.WithFields(logging.Fields{"engine": viper.GetString("Database.Engine"), "dialString": dialString}).Panic(err.Error())
+	if engine, err = gorm.Open(engineType, dialString); err != nil {
+		logging.WithFields(logging.Fields{"engine": engineType, "dialString": dialString}).Panic(err.Error())
 	}
 	if err = engine.AutoMigrate(
 		new(Log),
@@ -62,8 +67,8 @@ func Connect() (err error) {
 	}
 
 	engine.LogMode(true)
-	var gormLogger Logger
-	engine.SetLogger(gormLogger)
+	var gLogger Logger
+	engine.SetLogger(gLogger)
 	return
 }
 
