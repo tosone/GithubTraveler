@@ -1,0 +1,23 @@
+version: '2'
+services:
+  database:
+    image: postgres:alpine
+    hostname: traveler_postgres_alpine
+    environment:
+      - POSTGRES_USER=github_traveler
+      - POSTGRES_PASSWORD=crawler
+      - POSTGRES_DB=traveler_db
+    volumes:
+      - /data/postgres_db:/var/lib/postgresql/data
+  crawler:
+    depends_on:
+      - database
+    build:
+      args:
+        CONFIG: postgres/config.yml
+      context: ..
+    image: github_traveler:latest
+    command: ["./wait-for-it.sh", "database:5432", "--", "GithubTraveler-linux", "crawler", "--config", "config.yml"]
+    restart: always
+    links:
+      - database

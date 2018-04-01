@@ -1,0 +1,10 @@
+version: '2'
+services:
+  crawler:
+    build:
+      args:
+        CONFIG: sqlite3/config.yml
+      context: ..
+    image: github_traveler:latest
+    volumes:
+      - /data/db:/data/db
