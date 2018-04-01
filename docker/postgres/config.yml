@@ -1,0 +1,17 @@
+ClientID: 3d032602cc3318f720bf # github app client ID
+ClientSecret: 8e7f4a421ce4183bcc4ffb16991942c18cd0c9b6 # github app client secret
+Crawler:
+  Entrance: tosone # crawler entrance that one of github user
+  Timeout: 10 # request github timeout
+  Debug: true # debug all the request verbose info
+  ItemOutDate: 24 # Item that request another time (h)
+  WaitDataReady: 10 # Wait for data is ready for handle (s)
+  Verbose: true # output request info to database
+Database:
+  Engine: postgres # DB type
+  Username: github_traveler
+  Password: crawler
+  Host: database
+  Port: 5432
+  Database: traveler_db
+  SSLMode: disable
