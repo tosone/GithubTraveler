@@ -1,0 +1,24 @@
+version: '2'
+services:
+  database:
+    image: mysql:latest
+    hostname: traveler_mysql
+    environment:
+      - MYSQL_USER=github_traveler
+      - MYSQL_ROOT_PASSWORD=crawler
+      - MYSQL_PASSWORD=crawler
+      - MYSQL_DATABASE=traveler_db
+    volumes:
+      - /data/mysql_db:/var/lib/mysql
+  crawler:
+    depends_on:
+      - database
+    build:
+      args:
+        CONFIG: mysql/config.yml
+      context: ..
+    image: github_traveler:latest
+    command: ["./wait-for-it.sh", "database:3306", "--", "GithubTraveler-linux", "crawler", "--config", "config.yml"]
+    restart: always
+    links:
+      - database

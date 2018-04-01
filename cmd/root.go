@@ -40,7 +40,7 @@ var crawlerCmd = &cobra.Command{
 }
 
 func init() {
-	crawlerCmd.PersistentFlags().StringVarP(&config, "config", "c", "", "execute path")
+	crawlerCmd.PersistentFlags().StringVarP(&config, "config", "c", "./config.yml", "config file")
 
 	RootCmd.AddCommand(crawlerCmd)
 	RootCmd.AddCommand(versionCmd)
@@ -49,9 +49,6 @@ func init() {
 func initConfig() {
 	viper.SetConfigType("yaml")
 	viper.SetEnvPrefix(common.EnvPrefix)
-	if config == "" {
-		config = "./config.yaml"
-	}
 	if com.IsFile(config) {
 		viper.SetConfigFile(config)
 	} else {
