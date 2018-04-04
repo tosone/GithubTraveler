@@ -15,9 +15,9 @@ import (
 	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/jinzhu/gorm"
 	"github.com/parnurzeal/gorequest"
-	"github.com/satori/go.uuid"
 	"github.com/spf13/viper"
 	"github.com/tosone/logging"
+	"gopkg.in/satori/go.uuid.v1"
 )
 
 // userFollowers get all of info from username
