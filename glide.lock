@@ -1,5 +1,5 @@
-hash: 45c08af56133ff894a3519ad9b34d9a9020dff4e9a3e36663bb075630b0dda27
-updated: 2018-04-04T13:27:02.533159014+08:00
+hash: 5f057f056402b2ceb745766851720bffe2bda1f75e5f99337dddb2aa00e61e85
+updated: 2018-04-04T23:40:54.663064379+08:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9
@@ -41,8 +41,6 @@ imports:
   version: 66540cf1fcd2c3aee6f6787dfa32a6ae9a870f12
 - name: github.com/pkg/errors
   version: 816c9085562cd7ee03e7f8188a1cfd942858cded
-- name: github.com/satori/go.uuid
-  version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
 - name: github.com/spf13/afero
   version: 63644898a8da0bc22138abf860edaf5277b6102e
   subpackages:
@@ -76,6 +74,8 @@ imports:
   - unicode/norm
 - name: gopkg.in/natefinch/lumberjack.v2
   version: a96e63847dc3c67d17befa69c303767e2f84e54f
+- name: gopkg.in/satori/go.uuid.v1
+  version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
 - name: gopkg.in/yaml.v2
   version: 5420a8b6744d3b0345ab293f6fcba19c978f1183
 testImports: []
