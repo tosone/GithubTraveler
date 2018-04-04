@@ -101,6 +101,7 @@ package pflag
 import (
 	"bytes"
 	"errors"
+	goflag "flag"
 	"fmt"
 	"io"
 	"os"
@@ -123,6 +124,12 @@ const (
 	PanicOnError
 )
 
+// ParseErrorsWhitelist defines the parsing errors that can be ignored
+type ParseErrorsWhitelist struct {
+	// UnknownFlags will ignore unknown flags errors and continue parsing rest of the flags
+	UnknownFlags bool
+}
+
 // NormalizedName is a flag name that has been normalized according to rules
 // for the FlagSet (e.g. making '-' and '_' equivalent).
 type NormalizedName string
@@ -137,6 +144,9 @@ type FlagSet struct {
 	// SortFlags is used to indicate, if user wants to have sorted flags in
 	// help/usage messages.
 	SortFlags bool
+
+	// ParseErrorsWhitelist is used to configure a whitelist of errors
+	ParseErrorsWhitelist ParseErrorsWhitelist
 
 	name              string
 	parsed            bool
@@ -153,6 +163,8 @@ type FlagSet struct {
 	output            io.Writer // nil means stderr; use out() accessor
 	interspersed      bool      // allow interspersed option/non-option args
 	normalizeNameFunc func(f *FlagSet, name string) NormalizedName
+
+	addedGoFlagSets []*goflag.FlagSet
 }
 
 // A Flag represents the state of a flag.
@@ -899,6 +911,25 @@ func (f *FlagSet) usage() {
 	}
 }
 
+//--unknown (args will be empty)
+//--unknown --next-flag ... (args will be --next-flag ...)
+//--unknown arg ... (args will be arg ...)
+func stripUnknownFlagValue(args []string) []string {
+	if len(args) == 0 {
+		//--unknown
+		return args
+	}
+
+	first := args[0]
+	if first[0] == '-' {
+		//--unknown --next-flag ...
+		return args
+	}
+
+	//--unknown arg ... (args will be arg ...)
+	return args[1:]
+}
+
 func (f *FlagSet) parseLongArg(s string, args []string, fn parseFunc) (a []string, err error) {
 	a = args
 	name := s[2:]
@@ -910,13 +941,24 @@ func (f *FlagSet) parseLongArg(s string, args []string, fn parseFunc) (a []strin
 	split := strings.SplitN(name, "=", 2)
 	name = split[0]
 	flag, exists := f.formal[f.normalizeFlagName(name)]
+
 	if !exists {
-		if name == "help" { // special case for nice help message.
+		switch {
+		case name == "help":
 			f.usage()
 			return a, ErrHelp
+		case f.ParseErrorsWhitelist.UnknownFlags:
+			// --unknown=unknownval arg ...
+			// we do not want to lose arg in this case
+			if len(split) >= 2 {
+				return a, nil
+			}
+
+			return stripUnknownFlagValue(a), nil
+		default:
+			err = f.failf("unknown flag: --%s", name)
+			return
 		}
-		err = f.failf("unknown flag: --%s", name)
-		return
 	}
 
 	var value string
@@ -954,13 +996,25 @@ func (f *FlagSet) parseSingleShortArg(shorthands string, args []string, fn parse
 
 	flag, exists := f.shorthands[c]
 	if !exists {
-		if c == 'h' { // special case for nice help message.
+		switch {
+		case c == 'h':
 			f.usage()
 			err = ErrHelp
 			return
+		case f.ParseErrorsWhitelist.UnknownFlags:
+			// '-f=arg arg ...'
+			// we do not want to lose arg in this case
+			if len(shorthands) > 2 && shorthands[1] == '=' {
+				outShorts = ""
+				return
+			}
+
+			outArgs = stripUnknownFlagValue(outArgs)
+			return
+		default:
+			err = f.failf("unknown shorthand flag: %q in -%s", c, shorthands)
+			return
 		}
-		err = f.failf("unknown shorthand flag: %q in -%s", c, shorthands)
-		return
 	}
 
 	var value string
@@ -1047,6 +1101,11 @@ func (f *FlagSet) parseArgs(args []string, fn parseFunc) (err error) {
 // are defined and before flags are accessed by the program.
 // The return value will be ErrHelp if -help was set but not defined.
 func (f *FlagSet) Parse(arguments []string) error {
+	if f.addedGoFlagSets != nil {
+		for _, goFlagSet := range f.addedGoFlagSets {
+			goFlagSet.Parse(nil)
+		}
+	}
 	f.parsed = true
 
 	if len(arguments) < 0 {
