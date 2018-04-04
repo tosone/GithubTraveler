@@ -440,9 +440,9 @@ func (s *Scanner) scanHeredoc() {
 
 	var identRegexp *regexp.Regexp
 	if identBytes[0] == '-' {
-		identRegexp = regexp.MustCompile(fmt.Sprintf(`[[:space:]]*%s\z`, identBytes[1:]))
+		identRegexp = regexp.MustCompile(fmt.Sprintf(`^[[:space:]]*%s\r*\z`, identBytes[1:]))
 	} else {
-		identRegexp = regexp.MustCompile(fmt.Sprintf(`[[:space:]]*%s\z`, identBytes))
+		identRegexp = regexp.MustCompile(fmt.Sprintf(`^[[:space:]]*%s\r*\z`, identBytes))
 	}
 
 	// Read the actual string value
@@ -552,7 +552,7 @@ func (s *Scanner) scanDigits(ch rune, base, n int) rune {
 		s.err("illegal char escape")
 	}
 
-	if n != start {
+	if n != start && ch != eof {
 		// we scanned all digits, put the last non digit char back,
 		// only if we read anything at all
 		s.unread()
