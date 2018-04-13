@@ -41,9 +41,14 @@ func infoUser(ctx context.Context, wg *sync.WaitGroup) {
 			num = 0
 			continue
 		}
+		requestURL := fmt.Sprintf("%s/users/%s", common.GithubApi, user.Login)
+		if ht.Get(requestURL) {
+			continue
+		}
+		ht.Set(requestURL)
 		request := gorequest.New().Timeout(time.Second * time.Duration(viper.GetInt("Crawler.Timeout"))).
 			SetDebug(viper.GetBool("Crawler.Debug")).
-			Get(fmt.Sprintf("%s/users/%s", common.GithubApi, user.Login)).
+			Get(requestURL).
 			Query(fmt.Sprintf("client_id=%s", viper.GetString("ClientID"))).
 			Query(fmt.Sprintf("client_secret=%s", viper.GetString("ClientSecret")))
 		response, body, errs = request.End()
