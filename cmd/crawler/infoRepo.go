@@ -45,10 +45,14 @@ func infoRepo(ctx context.Context, wg *sync.WaitGroup) {
 		if user, err = new(models.User).FindByUserID(repo.UserID); err != nil {
 			continue
 		}
-
+		requestURL := fmt.Sprintf("%s/repos/%s/%s", common.GithubApi, user.Login, repo.Name)
+		if ht.Get(requestURL) {
+			continue
+		}
+		ht.Set(requestURL)
 		request := gorequest.New().Timeout(time.Second * time.Duration(viper.GetInt("Crawler.Timeout"))).
 			SetDebug(viper.GetBool("Crawler.Debug")).
-			Get(fmt.Sprintf("%s/repos/%s/%s", common.GithubApi, user.Login, repo.Name)).
+			Get(requestURL).
 			Query(fmt.Sprintf("client_id=%s", viper.GetString("ClientID"))).
 			Query(fmt.Sprintf("client_secret=%s", viper.GetString("ClientSecret")))
 		response, body, errs = request.End()
