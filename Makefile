@@ -3,24 +3,15 @@ GitHash    = main.GitHash=$(shell git rev-parse HEAD)
 Version    = main.Version=$(shell git describe --abbrev=0 --tags --always)
 Target     = $(shell basename $(abspath $(dir $$PWD)))
 
-all:
+all: $(shell uname -s)
 
-mkdir:
-	mkdir release
-
-drawin:
+Darwin:
 	GOOS=darwin GOARCH=amd64 go build -v -o release/${Target}-drawin -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
 
-linux:
+Linux:
 	GOOS=linux GOARCH=amd64 go build -v -o release/${Target}-linux -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
 
-armv5:
-	GOOS=linux GOARCH=arm GOARM=5 go build -v -o release/${Target}-armv5 -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
-
-armv6:
-	GOOS=linux GOARCH=arm GOARM=6 go build -v -o release/${Target}-armv6 -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
-
-armv7:
+armv7l:
 	GOOS=linux GOARCH=arm GOARM=7 go build -v -o release/${Target}-armv7 -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
 
 authors:
