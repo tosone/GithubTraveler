@@ -59,9 +59,14 @@ func userRepos(ctx context.Context, wg *sync.WaitGroup) {
 				return
 			default:
 			}
+			requestURL := fmt.Sprintf("%s/users/%s/repos", common.GithubApi, user.Login)
+			if ht.Get(requestURL) {
+				continue
+			}
+			ht.Set(requestURL)
 			request := gorequest.New().Timeout(time.Second * time.Duration(viper.GetInt("Crawler.Timeout"))).
 				SetDebug(viper.GetBool("Crawler.Debug")).
-				Get(fmt.Sprintf("%s/users/%s/repos", common.GithubApi, user.Login)).
+				Get(requestURL).
 				Query(fmt.Sprintf("client_id=%s", viper.GetString("ClientID"))).
 				Query(fmt.Sprintf("client_secret=%s", viper.GetString("ClientSecret"))).
 				Query(fmt.Sprintf("page=%d", page))

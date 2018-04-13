@@ -7,6 +7,7 @@ Crawler:
   ItemOutDate: 24 # Item that request another time (h)
   WaitDataReady: 10 # Wait for data is ready for handle (s)
   Verbose: true # output request info to database
+  UniReqTimeout: 3600 # Unique request timeout
 Database:
   Engine: postgres # DB type
   Path: crawler.db # database path
