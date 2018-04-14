@@ -8,11 +8,13 @@ import (
 	"github.com/spf13/viper"
 )
 
+// HashTable ..
 type HashTable struct {
 	locker *sync.Mutex
 	data   map[int]time.Time
 }
 
+// New ..
 func New() *HashTable {
 	ht := &HashTable{
 		data:   make(map[int]time.Time),
@@ -22,18 +24,26 @@ func New() *HashTable {
 	return ht
 }
 
+// Size ..
 func (ht *HashTable) Size() int {
 	return len(ht.data)
 }
 
-func (ht *HashTable) Set(key string) {
+// Set ..
+func (ht *HashTable) Set(key string) error {
 	ht.locker.Lock()
 	defer ht.locker.Unlock()
 
 	if ht.Size() == maxInt-1 {
 		ht.check()
 	}
-	ht.data[ht.genHash(key)] = time.Now()
+	var position int
+	var err error
+	if position, err = ht.genHash(key); err != nil {
+		return err
+	}
+	ht.data[position] = time.Now()
+	return nil
 }
 
 func (ht *HashTable) check() {
@@ -45,20 +55,43 @@ func (ht *HashTable) check() {
 	}
 }
 
-func (ht *HashTable) Get(key string) bool {
-	if _, ok := ht.data[ht.genHash(key)]; ok {
-		return true
+// Get ..
+func (ht *HashTable) Get(key string) (bool, error) {
+	var position int
+	var err error
+	if position, err = ht.genHash(key); err != nil {
+		return false, err
 	}
-	return false
+	var val time.Time
+	var ok bool
+	if val, ok = ht.data[position]; ok {
+		if int(time.Since(val).Seconds()) > viper.GetInt("Crawler.UniReqTimeout") {
+			if err = ht.Remove(key); err != nil {
+				return true, err
+			}
+			return false, nil
+		}
+		return true, nil
+	}
+	return false, nil
 }
 
-func (ht *HashTable) Remove(key string) {
+// Remove ..
+func (ht *HashTable) Remove(key string) error {
 	ht.locker.Lock()
 	defer ht.locker.Unlock()
-
-	if ht.Get(key) {
-		ht.remove(ht.genHash(key))
+	var position int
+	var err error
+	if position, err = ht.genHash(key); err != nil {
+		return err
 	}
+	var b bool
+	if b, err = ht.Get(key); err != nil {
+		return err
+	} else if b {
+		ht.remove(position)
+	}
+	return nil
 }
 
 func (ht *HashTable) remove(key int) {
@@ -69,14 +102,13 @@ const (
 	minUint uint = 0
 	maxUint      = ^minUint
 	maxInt       = int(maxUint >> 1)
-	minInt       = ^maxInt
 )
 
-func (ht *HashTable) genHash(s string) int {
+func (ht *HashTable) genHash(s string) (int, error) {
 	hash := fnv.New64()
-	hash.Write([]byte(s))
+	_, err := hash.Write([]byte(s))
 
-	return int(hash.Sum64() % uint64(maxInt))
+	return int(hash.Sum64() % uint64(maxInt)), err
 }
 
 func (ht *HashTable) runLoop() {
