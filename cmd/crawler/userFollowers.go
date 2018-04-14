@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/EffDataAly/GithubTraveler/common"
-	"github.com/EffDataAly/GithubTraveler/common/headerLink"
+	"github.com/EffDataAly/GithubTraveler/common/headerlink"
 	"github.com/EffDataAly/GithubTraveler/common/resp"
 	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/jinzhu/gorm"
@@ -77,7 +77,7 @@ func userFollowers(ctx context.Context, wg *sync.WaitGroup) {
 				Query(fmt.Sprintf("client_secret=%s", viper.GetString("ClientSecret"))).
 				Query(fmt.Sprintf("page=%d", page))
 			response, body, errs = request.End()
-			if nextURL, ok = headerLink.Parse(response.Header.Get("Link"))["next"]; ok {
+			if nextURL, ok = headerlink.Parse(response.Header.Get("Link"))["next"]; ok {
 				var u *url.URL
 				if u, err = url.Parse(nextURL); err != nil {
 					logging.Error(err)
