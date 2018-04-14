@@ -1,12 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"runtime"
-
 	"github.com/EffDataAly/GithubTraveler/cmd"
 	"github.com/EffDataAly/GithubTraveler/cmd/version"
-	"github.com/EffDataAly/GithubTraveler/common"
 	"github.com/tosone/logging"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -24,10 +20,6 @@ var BuildStamp = "no provided"
 var GitHash = "no provided"
 
 func main() {
-	if runtime.GOOS == "windows" {
-		logging.Panic(fmt.Sprintf("%s not support windows just linux.", common.AppName))
-	}
-
 	version.Setting(Version, BuildStamp, GitHash)
 
 	if err := cmd.RootCmd.Execute(); err != nil {
