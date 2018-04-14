@@ -3,16 +3,16 @@ GitHash    = main.GitHash=$(shell git rev-parse HEAD)
 Version    = main.Version=$(shell git describe --abbrev=0 --tags --always)
 Target     = $(shell basename $(abspath $(dir $$PWD)))
 
-all: $(shell uname -s)
+ifeq ($(OS),Windows_NT)
+    OSName = windows
+else
+    OSName = $(shell echo $(shell uname -s) | tr '[:upper:]' '[:lower:]')
+endif
 
-Darwin:
-	GOOS=darwin GOARCH=amd64 go build -v -o release/${Target}-drawin -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
+all: ${OSName}
 
-Linux:
-	GOOS=linux GOARCH=amd64 go build -v -o release/${Target}-linux -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
-
-armv7l:
-	GOOS=linux GOARCH=arm GOARM=7 go build -v -o release/${Target}-armv7 -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
+${OSName}:
+	GOOS=$@ GOARCH=amd64 go build -v -o release/${Target}-$@ -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
 
 authors:
 	printf "Authors\n=======\n\nProject's contributors:\n\n" > AUTHORS.md
