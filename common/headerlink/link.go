@@ -1,4 +1,4 @@
-package headerLink
+package headerlink
 
 import (
 	"regexp"
