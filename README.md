@@ -4,10 +4,11 @@ Travel all the github users, orgs, repos.
 
 ### How to compile
 
-- Need golang 1.9.0 or above.
+- Need golang 1.9.0 or later version.
 - Need gcc.
-- Compile on linux `make linux`.
-- Compile on MacOS `make drawin`.
+- Compile on Linux `make Linux`.
+- Compile on MacOS `make Darwin`.
+- Compile on Windows `make windows`.
 
 ### How to run
 
