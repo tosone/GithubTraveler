@@ -41,11 +41,13 @@ func infoUser(ctx context.Context, wg *sync.WaitGroup) {
 			num = 0
 			continue
 		}
-		requestURL := fmt.Sprintf("%s/users/%s", common.GithubApi, user.Login)
-		if ht.Get(requestURL) {
+		requestURL := fmt.Sprintf("%s/users/%s", common.GithubAPI, user.Login)
+		if b, _ := ht.Get(requestURL); b {
 			continue
 		}
-		ht.Set(requestURL)
+		if err = ht.Set(requestURL); err != nil {
+			logging.Error(err)
+		}
 		request := gorequest.New().Timeout(time.Second * time.Duration(viper.GetInt("Crawler.Timeout"))).
 			SetDebug(viper.GetBool("Crawler.Debug")).
 			Get(requestURL).
