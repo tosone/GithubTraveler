@@ -20,8 +20,6 @@ var BuildStamp = "no provided"
 var GitHash = "no provided"
 
 func main() {
-	var schol = "release"
-	logging.Info(schol)
 	version.Setting(Version, BuildStamp, GitHash)
 
 	if err := cmd.RootCmd.Execute(); err != nil {
