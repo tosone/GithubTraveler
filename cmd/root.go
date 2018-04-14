@@ -15,8 +15,8 @@ var config string
 // RootCmd represents the base command when called without any sub commands
 var RootCmd = &cobra.Command{
 	Use:   common.AppName,
-	Short: "Travel all of the github organizations, users and repository.",
-	Long:  `Travel all of the github organizations, users and repository.`,
+	Short: "Travel all of the github organizations, users and repositories.",
+	Long:  `Travel all of the github organizations, users and repositories.`,
 }
 
 var versionCmd = &cobra.Command{
@@ -30,8 +30,8 @@ var versionCmd = &cobra.Command{
 
 var crawlerCmd = &cobra.Command{
 	Use:   "crawler",
-	Short: "Travel all of the github organizations, users and repository.",
-	Long:  `Travel all of the github organizations, users and repository.`,
+	Short: "Travel all of the github organizations, users and repositories.",
+	Long:  `Travel all of the github organizations, users and repositories.`,
 	Args:  cobra.MinimumNArgs(0),
 	Run: func(_ *cobra.Command, args []string) {
 		initConfig()
