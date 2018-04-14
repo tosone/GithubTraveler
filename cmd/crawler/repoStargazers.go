@@ -54,11 +54,13 @@ func repoStargazers(ctx context.Context, wg *sync.WaitGroup) {
 		if user, err = new(models.User).FindByUserID(repo.UserID); err != nil {
 			continue
 		}
-		requestURL := fmt.Sprintf("%s/repos/%s/%s/stargazers", common.GithubApi, user.Login, repo.Name)
-		if ht.Get(requestURL) {
+		requestURL := fmt.Sprintf("%s/repos/%s/%s/stargazers", common.GithubAPI, user.Login, repo.Name)
+		if b, _ := ht.Get(requestURL); b {
 			continue
 		}
-		ht.Set(requestURL)
+		if err = ht.Set(requestURL); err != nil {
+			logging.Error(err)
+		}
 		request := gorequest.New().Timeout(time.Second * time.Duration(viper.GetInt("Crawler.Timeout"))).
 			SetDebug(viper.GetBool("Crawler.Debug")).
 			Get(requestURL).

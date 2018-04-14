@@ -33,9 +33,9 @@ var crawlerCmd = &cobra.Command{
 	Short: "Travel all of the github organizations, users and repositories.",
 	Long:  `Travel all of the github organizations, users and repositories.`,
 	Args:  cobra.MinimumNArgs(0),
-	Run: func(_ *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, _ []string) {
 		initConfig()
-		crawler.Initialize(args...)
+		crawler.Initialize()
 	},
 }
 

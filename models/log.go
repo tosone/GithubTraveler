@@ -24,6 +24,7 @@ func (log *Log) Create() (err error) {
 	return
 }
 
+// GetOutDate ..
 func (log *Log) GetOutDate() bool {
 	var l = new(Log)
 	err := engine.Find(l, Log{Type: log.Type, Mark: log.Mark})

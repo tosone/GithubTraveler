@@ -25,10 +25,9 @@ func (repo *Repo) IsEmpty() (isEmpty bool, err error) {
 	if err = engine.Model(new(Repo)).Count(&count).Error; err != nil {
 		return
 	}
-	if count != 0 {
-		isEmpty = false
+	if count == 0 {
+		isEmpty = true
 	}
-	isEmpty = true
 	return
 }
 

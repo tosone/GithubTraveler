@@ -15,7 +15,7 @@ import (
 var ht = htexpire.New()
 
 // Initialize initialize
-func Initialize(tags ...string) {
+func Initialize() {
 	var err error
 	if err = models.Connect(); err != nil {
 		logging.Fatal(err)
@@ -41,12 +41,10 @@ func Initialize(tags ...string) {
 	go repoStargazers(ctx, wgAll)
 	go repoWatchers(ctx, wgAll)
 
-	signalChannel := make(chan os.Signal)
+	signalChannel := make(chan os.Signal, 1)
 	signal.Notify(signalChannel, os.Interrupt)
-	select {
-	case <-signalChannel:
-		ctxCancel()
-		wgAll.Wait()
-		logging.Info("Exit correctly already.")
-	}
+	<-signalChannel
+	ctxCancel()
+	wgAll.Wait()
+	logging.Info("Exit correctly already.")
 }

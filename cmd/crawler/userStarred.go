@@ -63,11 +63,13 @@ func userStarred(ctx context.Context, wg *sync.WaitGroup) {
 				return
 			default:
 			}
-			requestURL := fmt.Sprintf("%s/users/%s/starred", common.GithubApi, user.Login)
-			if ht.Get(requestURL) {
+			requestURL := fmt.Sprintf("%s/users/%s/starred", common.GithubAPI, user.Login)
+			if b, _ := ht.Get(requestURL); b {
 				continue
 			}
-			ht.Set(requestURL)
+			if err = ht.Set(requestURL); err != nil {
+				logging.Error(err)
+			}
 			request := gorequest.New().Timeout(time.Second * time.Duration(viper.GetInt("Crawler.Timeout"))).
 				SetDebug(viper.GetBool("Crawler.Debug")).
 				Get(requestURL).
@@ -76,7 +78,8 @@ func userStarred(ctx context.Context, wg *sync.WaitGroup) {
 				Query(fmt.Sprintf("page=%d", page))
 			response, body, errs = request.End()
 			if nextURL, ok = headerLink.Parse(response.Header.Get("Link"))["next"]; ok {
-				if u, err := url.Parse(nextURL); err != nil {
+				var u *url.URL
+				if u, err = url.Parse(nextURL); err != nil {
 					logging.Error(err)
 				} else {
 					if page, err = strconv.Atoi(u.Query().Get("page")); err != nil {

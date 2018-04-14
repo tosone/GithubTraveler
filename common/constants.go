@@ -6,5 +6,5 @@ const AppName = "GithubTraveler"
 // EnvPrefix EnvPrefix
 const EnvPrefix = "GithubTraveler"
 
-// GithubApi GithubApi
-const GithubApi = "https://api.github.com"
+// GithubAPI GithubAPI
+const GithubAPI = "https://api.github.com"
