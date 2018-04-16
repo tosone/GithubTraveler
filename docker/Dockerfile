@@ -1,11 +1,13 @@
-FROM alpine
+FROM alpine:3.7
 
-WORKDIR /data
+MAINTAINER Tosone <i@tosiney.com>
 
 ARG GOPATH=/data/gocode
 ARG CONFIG=config.yml
 
 COPY ${CONFIG} /data
+
+WORKDIR /data
 
 RUN apk add --no-cache --virtual .build-deps \
   gcc go git make libc-dev wget \
