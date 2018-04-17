@@ -6,13 +6,10 @@ import (
 	"os/signal"
 	"sync"
 
-	"github.com/EffDataAly/GithubTraveler/common/htexpire"
 	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/spf13/viper"
 	"github.com/tosone/logging"
 )
-
-var ht = htexpire.New()
 
 // Initialize initialize
 func Initialize() {
