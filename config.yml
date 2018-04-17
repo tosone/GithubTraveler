@@ -9,11 +9,10 @@ Crawler:
   Verbose: true # output request info to database
   UniReqTimeout: 3600 # Unique request timeout
 Database:
-  Engine: postgres # DB type
+  Engine: sqlite3 # DB type
   Path: crawler.db # database path
-  Username: postgres
-  Password: tosone
-  Host: 172.17.0.2
-  Port: 5432
-  Database: code
-  SSLMode: disable
+  Username: github_traveler
+  Password: crawler
+  Host: database
+  Port: 3306
+  Database: traveler_db

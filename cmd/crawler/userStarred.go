@@ -3,18 +3,13 @@ package crawler
 import (
 	"context"
 	"encoding/json"
-	"fmt"
-	"net/url"
-	"strconv"
 	"sync"
 	"time"
 
-	"github.com/EffDataAly/GithubTraveler/common"
-	"github.com/EffDataAly/GithubTraveler/common/headerlink"
+	"github.com/EffDataAly/GithubTraveler/common/downloader"
 	"github.com/EffDataAly/GithubTraveler/common/resp"
 	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/jinzhu/gorm"
-	"github.com/parnurzeal/gorequest"
 	"github.com/spf13/viper"
 	"github.com/tosone/logging"
 	"gopkg.in/satori/go.uuid.v1"
@@ -22,13 +17,10 @@ import (
 
 // userStarred get all of info from username
 func userStarred(ctx context.Context, wg *sync.WaitGroup) {
-	const crawlerName = "userStarred"
 	wg.Add(1)
 	defer wg.Done()
 
-	var response gorequest.Response
 	var body string
-	var errs []error
 	var err error
 	var num uint
 	for {
@@ -53,61 +45,14 @@ func userStarred(ctx context.Context, wg *sync.WaitGroup) {
 		var followersVersion = uuid.NewV4()
 		user.Followers = followersVersion.String()
 
-		var nextURL = "next"
-		var ok bool
-		var page = 1
+		var nextNum = 1
 
-		for nextURL != "" {
-			select {
-			case <-ctx.Done():
-				return
-			default:
-			}
-			requestURL := fmt.Sprintf("%s/users/%s/starred", common.GithubAPI, user.Login)
-			if b, _ := ht.Get(requestURL); b {
+		for nextNum != 0 {
+			if body, nextNum, err = downloader.Get(nextNum, user.Login); err != nil {
+				logging.Error(err)
 				continue
 			}
-			if err = ht.Set(requestURL); err != nil {
-				logging.Error(err)
-			}
-			request := gorequest.New().Timeout(time.Second * time.Duration(viper.GetInt("Crawler.Timeout"))).
-				SetDebug(viper.GetBool("Crawler.Debug")).
-				Get(requestURL).
-				Query(fmt.Sprintf("client_id=%s", viper.GetString("ClientID"))).
-				Query(fmt.Sprintf("client_secret=%s", viper.GetString("ClientSecret"))).
-				Query(fmt.Sprintf("page=%d", page))
-			response, body, errs = request.End()
-			if nextURL, ok = headerlink.Parse(response.Header.Get("Link"))["next"]; ok {
-				var u *url.URL
-				if u, err = url.Parse(nextURL); err != nil {
-					logging.Error(err)
-				} else {
-					if page, err = strconv.Atoi(u.Query().Get("page")); err != nil {
-						logging.Error(err)
-					}
-				}
-			} else {
-				nextURL = ""
-			}
-			log := new(models.Log)
-			log.URL = request.Url
-			log.Method = request.Method
-			log.Response = []byte(body)
-			log.Type = crawlerName
-			if len(errs) != 0 {
-				var errMsg string
-				for _, err := range errs {
-					errMsg += err.Error()
-					logging.Info(err)
-				}
-				log.ErrMsg = []byte(errMsg)
-			}
-			if err = log.Create(); err != nil {
-				logging.Error(err)
-			}
-			if response == nil {
-				continue
-			}
+
 			var repos []resp.Repo
 			if err = json.Unmarshal([]byte(body), &repos); err != nil {
 				logging.Error(err)
