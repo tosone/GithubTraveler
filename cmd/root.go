@@ -10,8 +10,6 @@ import (
 	"github.com/tosone/logging"
 )
 
-var config string
-
 // RootCmd represents the base command when called without any sub commands
 var RootCmd = &cobra.Command{
 	Use:   common.AppName,
@@ -39,11 +37,14 @@ var crawlerCmd = &cobra.Command{
 	},
 }
 
+// config command line params
+var config string
+
 func init() {
 	crawlerCmd.PersistentFlags().StringVarP(&config, "config", "c", "./config.yml", "config file")
 
-	RootCmd.AddCommand(crawlerCmd)
-	RootCmd.AddCommand(versionCmd)
+	RootCmd.AddCommand(crawlerCmd) // crawler commander
+	RootCmd.AddCommand(versionCmd) // version commander
 }
 
 func initConfig() {

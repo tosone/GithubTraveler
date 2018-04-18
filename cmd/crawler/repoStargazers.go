@@ -14,6 +14,7 @@ import (
 	"gopkg.in/satori/go.uuid.v1"
 )
 
+// repoStargazers get a repo's star num
 func repoStargazers(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 	defer wg.Done()

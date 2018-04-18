@@ -13,6 +13,7 @@ import (
 	"github.com/tosone/logging"
 )
 
+// infoUser get user's detail info
 func infoUser(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 	defer wg.Done()

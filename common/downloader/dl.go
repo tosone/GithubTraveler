@@ -18,7 +18,7 @@ import (
 
 var ht = htexpire.New()
 
-// Get ..
+// Get download the specified url's body
 func Get(num int, params ...string) (body string, nextNum int, err error) {
 	var response gorequest.Response
 	var crawlerName string
@@ -56,6 +56,8 @@ func Get(num int, params ...string) (body string, nextNum int, err error) {
 	}
 
 	response, body, errs = request.End()
+
+	// write log to database
 	log := new(models.Log)
 	log.URL = request.Url
 	log.Method = request.Method

@@ -15,7 +15,7 @@ import (
 	"gopkg.in/satori/go.uuid.v1"
 )
 
-// userSubscriptions get all of info from username
+// userSubscriptions get all of specified user's subscriptions repos
 func userSubscriptions(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 	defer wg.Done()

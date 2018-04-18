@@ -15,7 +15,7 @@ import (
 	"gopkg.in/satori/go.uuid.v1"
 )
 
-// userFollowers get all of info from username
+// userFollowers get all of specified user's followers
 func userFollowers(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 	defer wg.Done()
