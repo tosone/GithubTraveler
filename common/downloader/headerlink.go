@@ -7,6 +7,7 @@ import (
 
 type link map[string]string
 
+// headerLink parse GitHub header's link for next page num
 func headerLink(links string) (res link) {
 	if links == "" {
 		return

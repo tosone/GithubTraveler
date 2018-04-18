@@ -11,7 +11,7 @@ import (
 	"github.com/tosone/logging"
 )
 
-// Initialize initialize
+// Initialize crawler entry
 func Initialize() {
 	var err error
 	if err = models.Connect(); err != nil {
@@ -40,8 +40,8 @@ func Initialize() {
 
 	signalChannel := make(chan os.Signal, 1)
 	signal.Notify(signalChannel, os.Interrupt)
-	<-signalChannel
-	ctxCancel()
-	wgAll.Wait()
+	<-signalChannel // catch the ctrl-c
+	ctxCancel()     // stop all of the crawlers
+	wgAll.Wait()    // wait the crawler stopped
 	logging.Info("Exit correctly already.")
 }
