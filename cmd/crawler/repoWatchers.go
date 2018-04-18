@@ -14,6 +14,7 @@ import (
 	"gopkg.in/satori/go.uuid.v1"
 )
 
+// repoWatchers get repo's watchers
 func repoWatchers(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 	defer wg.Done()

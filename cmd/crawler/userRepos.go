@@ -14,7 +14,7 @@ import (
 	"github.com/tosone/logging"
 )
 
-// userRepos get all of repos from username
+// userRepos get all of specified user's repos
 func userRepos(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 	defer wg.Done()

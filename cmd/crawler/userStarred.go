@@ -15,7 +15,7 @@ import (
 	"gopkg.in/satori/go.uuid.v1"
 )
 
-// userStarred get all of info from username
+// userStarred get all of specified user's starred repos
 func userStarred(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 	defer wg.Done()

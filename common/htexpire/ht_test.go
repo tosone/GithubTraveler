@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+// TestNew simple test hash table
 func TestNew(t *testing.T) {
 	ht := New()
 	var list = []string{"a", "b", "c", "x", "y", "z"}

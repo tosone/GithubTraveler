@@ -13,6 +13,7 @@ import (
 	"github.com/tosone/logging"
 )
 
+// infoRepo get repo's detail info
 func infoRepo(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 	defer wg.Done()

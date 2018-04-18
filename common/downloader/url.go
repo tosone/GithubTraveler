@@ -7,6 +7,7 @@ import (
 	"github.com/EffDataAly/GithubTraveler/common"
 )
 
+// urlSwitch get request url
 func urlSwitch(t string, params ...string) (url string, err error) {
 	switch t {
 	case "infoRepo":
