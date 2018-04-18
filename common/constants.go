@@ -1,10 +1,10 @@
 package common
 
-// AppName AppName
+// AppName this project name
 const AppName = "GithubTraveler"
 
-// EnvPrefix EnvPrefix
+// EnvPrefix get var from env prefix
 const EnvPrefix = "GithubTraveler"
 
-// GithubAPI GithubAPI
+// GithubAPI Github API prefix
 const GithubAPI = "https://api.github.com"

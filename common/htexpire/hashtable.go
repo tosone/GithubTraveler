@@ -8,13 +8,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-// HashTable ..
+// HashTable hash table with mutex locker
 type HashTable struct {
 	locker *sync.Mutex
 	data   map[int]time.Time
 }
 
-// New ..
+// New new a hash table
 func New() *HashTable {
 	ht := &HashTable{
 		data:   make(map[int]time.Time),
@@ -24,12 +24,12 @@ func New() *HashTable {
 	return ht
 }
 
-// Size ..
+// Size get the size of hash table
 func (ht *HashTable) Size() int {
 	return len(ht.data)
 }
 
-// Set ..
+// Set add a new item in hash table
 func (ht *HashTable) Set(key string) error {
 	ht.locker.Lock()
 	defer ht.locker.Unlock()
@@ -46,6 +46,7 @@ func (ht *HashTable) Set(key string) error {
 	return nil
 }
 
+// check check size of the hash table get max size, wait size lower will return
 func (ht *HashTable) check() {
 	for {
 		ht.runLoop()
@@ -55,7 +56,7 @@ func (ht *HashTable) check() {
 	}
 }
 
-// Get ..
+// Get get specified key in hash table
 func (ht *HashTable) Get(key string) (bool, error) {
 	var position int
 	var err error
@@ -76,7 +77,7 @@ func (ht *HashTable) Get(key string) (bool, error) {
 	return false, nil
 }
 
-// Remove ..
+// Remove remove specified key
 func (ht *HashTable) Remove(key string) error {
 	ht.locker.Lock()
 	defer ht.locker.Unlock()
@@ -94,6 +95,7 @@ func (ht *HashTable) Remove(key string) error {
 	return nil
 }
 
+// remove remove the specified key in map
 func (ht *HashTable) remove(key int) {
 	delete(ht.data, key)
 }
@@ -104,6 +106,7 @@ const (
 	maxInt       = int(maxUint >> 1)
 )
 
+// genHash generate hash for specified key
 func (ht *HashTable) genHash(s string) (int, error) {
 	hash := fnv.New64()
 	_, err := hash.Write([]byte(s))
@@ -111,6 +114,7 @@ func (ht *HashTable) genHash(s string) (int, error) {
 	return int(hash.Sum64() % uint64(maxInt)), err
 }
 
+// runLoop check any other key expired
 func (ht *HashTable) runLoop() {
 	for key, val := range ht.data {
 		if int(time.Since(val).Seconds()) > viper.GetInt("Crawler.UniReqTimeout") {

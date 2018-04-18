@@ -2,7 +2,8 @@ package resp
 
 import "time"
 
-// User ..
+// User GitHub user struct
+// https://api.github.com/users/tosone
 type User struct {
 	Login             string      `json:"login"`
 	UserID            uint64      `json:"id"`

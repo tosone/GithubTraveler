@@ -8,6 +8,7 @@ import (
 
 const traceDeep = 3
 
+// trace trace the call stack function name
 func trace() (name string, err error) {
 	pc := make([]uintptr, traceDeep)
 	runtime.Callers(3, pc)
