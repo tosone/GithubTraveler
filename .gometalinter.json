@@ -1,5 +1,5 @@
 {
-  "deadline": "3m",
+  "deadline": "10m",
   "enable": [
     "deadcode",
     "errcheck",

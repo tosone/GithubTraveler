@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.10.1
+    working_directory: /go/src/github.com/EffDataAly/GithubTraveler
+    steps:
+      - checkout
+      - run: go get -u -v gopkg.in/alecthomas/gometalinter.v2
+      - run: gometalinter.v2 --install
+      - run: go get -u -v github.com/GoASTScanner/gas/cmd/gas/...
+      - run: go get -u -v github.com/client9/misspell/cmd/misspell
+      - run: make lint
+      - run: make
