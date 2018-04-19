@@ -1,4 +1,6 @@
-# GithubTraveler [![Build Status](https://travis-ci.org/EffDataAly/GithubTraveler.svg?branch=master)](https://travis-ci.org/EffDataAly/GithubTraveler) [![Build status](https://ci.appveyor.com/api/projects/status/o9o5x1i2j9smx11o?svg=true)](https://ci.appveyor.com/project/tosone21763/githubtraveler) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7d0cc184ed574da5930cafd0ee5368e2)](https://app.codacy.com/app/EffDataAly/GithubTraveler?utm_source=github.com&utm_medium=referral&utm_content=EffDataAly/GithubTraveler&utm_campaign=badger)
+# GithubTraveler
+
+![Travis](https://img.shields.io/travis/EffDataAly/GithubTraveler.svg?style=flat-square) ![AppVeyor](https://img.shields.io/appveyor/ci/tosone21763/githubtraveler.svg?style=flat-square) ![CircleCI](https://img.shields.io/circleci/project/github/EffDataAly/GithubTraveler.svg?style=flat-square) ![Codacy grade](https://img.shields.io/codacy/grade/7d0cc184ed574da5930cafd0ee5368e2.svg?style=flat-square)
 
 Travel all the github users, orgs, repos.
 
