@@ -1,6 +1,6 @@
-BuildStamp = main.BuildStamp=$(shell date '+%Y-%m-%d_%H:%M:%S')
-GitHash    = main.GitHash=$(shell git rev-parse HEAD)
-Version    = main.Version=$(shell git describe --abbrev=0 --tags --always)
+BuildStamp = $(shell date '+%Y-%m-%d_%H:%M:%S')
+GitHash    = $(shell git rev-parse HEAD)
+Version    = $(shell git describe --abbrev=0 --tags --always)
 Target     = $(shell basename $(abspath $(dir $$PWD)))
 Suffix     =
 
@@ -14,7 +14,12 @@ endif
 all: ${OSName}
 
 ${OSName}:
-	GOOS=$@ GOARCH=amd64 go build -v -o release/${Target}-$@${Suffix} -ldflags "-s -w -X ${BuildStamp} -X ${GitHash} -X ${Version}"
+	GOOS=$@ GOARCH=amd64 go build -v -o release/${Target}-$@${Suffix} -ldflags "-s -w -X main.BuildStamp=${BuildStamp} -X main.GitHash=${GitHash} -X main.Version=${Version}"
+
+release:
+	xgo -v -out ${Target}-${Version} --targets=windows/*,darwin/*,linux/* -ldflags "-s -w -X main.BuildStamp=${BuildStamp} -X main.GitHash=${GitHash} -X main.Version=${Version}" github.com/EffDataAly/GithubTraveler
+	mkdir release
+	mv ${Target}-* release
 
 authors:
 	printf "Authors\n=======\n\nProject's contributors:\n\n" > AUTHORS.md
@@ -25,3 +30,5 @@ lint:
 
 clean:
 	-rm -rf release *.db *.db-journal
+
+.PHONY: release all

@@ -8,9 +8,17 @@ before_script:
   - gometalinter.v2 --install
   - go get -u -v github.com/GoASTScanner/gas/cmd/gas/...
   - go get -u -v github.com/client9/misspell/cmd/misspell
+  - go get -u -v github.com/karalabe/xgo
+  - go get -u -v github.com/tosone/release2github
 script:
   - make lint
   - make
 notifications:
   slack:
     secure: SRYvevgInWT4AbpjoA1OBRANWjp1MBN5Je3aLicn0z1G6wjAKp8afbwI89OcReyFnjHvDdNBSAlcDt76eof62Y7G7OgF5jIJIsswEZUa4ESbPocMqZrDNhdsFvrSpTXn8x1HpCGypO4CKpyx9xgJwn8tQq8QZu11OCqu8a00BhVPKesCDMiPMTwPWyJ5foeqp/BauZB+1qQH9MLrlFb8tKZbljqsJOc+qwzj31+6pAX4MUc/620QAjChrAVzAieWQxfVwqiTKX8eCkoBA/jicmDsEryFwBmA5s+N6W2Y5j2ByXJc6hCKDdDzWcp9UDTzv9UeNidlnjUHFirrkHQiNQEtNbkCmOp1VgXtP+nP+j3dtdWYKxZc4TAlPKUXWc2QE1GJrM0DmoNFeDJ013LnwllpYdmOM2Y3jdN9rej3vdJEqwP7K9DxgRX0ckB9pmW9ydD4Gj24aL0si00xGh8wj9Vfwy6N7WnJmVe46IYGjD/5fVTFRvhfaOvecYXkzZ0+tgiVdRXllfef2RMK7mfF4SyrUp4c0MG1KrlYOzvOzmwKLRiAhxJnGnqLuNE1+lRPyt7t1aMdqJlYERgyzR6zOtdqtDXNIJHEFW6H/5KtzLMlrGV1NR5LbNdV5Z7EmVSg7jc4T05o3eZ6uHK9ognpQPK3qSvINZ8cGe9i05G6s1o=
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: make release && release2github create
+  on:
+    tags: true
