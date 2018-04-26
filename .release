@@ -1,0 +1,13 @@
+Username: EffDataAly
+Repo: GithubTraveler
+Branch: master
+Rewrite: false
+Draft: false
+Prerelease: false
+Runtime:
+  Timeout: 10
+  Debug: true
+Release:
+  Files:
+    - release/*
+  Compress: true
