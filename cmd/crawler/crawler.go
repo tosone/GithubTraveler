@@ -37,6 +37,9 @@ func Initialize() {
 
 	go repoStargazers(ctx, wgAll)
 	go repoWatchers(ctx, wgAll)
+	go repoIssues(ctx, wgAll)
+
+	go issueComments(ctx, wgAll)
 
 	signalChannel := make(chan os.Signal, 1)
 	signal.Notify(signalChannel, os.Interrupt)
