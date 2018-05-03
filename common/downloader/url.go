@@ -20,6 +20,16 @@ func urlSwitch(t string, params ...string) (url string, err error) {
 			return
 		}
 		url = fmt.Sprintf("%s/users/%s", common.GithubAPI, params[0])
+	case "issueComments":
+		if err = checkParamsNum(3, params...); err != nil {
+			return
+		}
+		url = fmt.Sprintf("%s/repos/%s/%s/issues/%s/comments", common.GithubAPI, params[0], params[1], params[2])
+	case "repoIssues":
+		if err = checkParamsNum(2, params...); err != nil {
+			return
+		}
+		url = fmt.Sprintf("%s/repos/%s/%s/issues?state=all", common.GithubAPI, params[0], params[1])
 	case "repoStargazers":
 		if err = checkParamsNum(2, params...); err != nil {
 			return

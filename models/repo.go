@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -48,6 +50,17 @@ func (repo *Repo) Create() (err error) {
 func (repo *Repo) FindByID(id uint) (u *Repo, err error) {
 	u = new(Repo)
 	err = engine.Find(u, id).Error
+	return
+}
+
+// FindByRepoID ..
+func (repo *Repo) FindByRepoID(id uint64) (r *Repo, err error) {
+	if id == 0 {
+		err = errors.New("cannot find record with repo ID 0")
+		return
+	}
+	r = new(Repo)
+	err = engine.Find(r, User{UserID: id}).Error
 	return
 }
 
