@@ -49,45 +49,47 @@ func repoStargazers(ctx context.Context, wg *sync.WaitGroup) {
 		if user, err = new(models.User).FindByUserID(repo.UserID); err != nil {
 			continue
 		}
+		var nextNum = 1
+		for nextNum != 0 {
+			if body, nextNum, err = downloader.Get(nextNum, user.Login, repo.Name); err != nil {
+				logging.Error(err)
+				continue
+			}
 
-		if body, _, err = downloader.Get(0, user.Login, repo.Name); err != nil {
-			logging.Error(err)
-			continue
-		}
+			var owners []resp.Owner
+			if err = json.Unmarshal([]byte(body), &owners); err != nil {
+				logging.Error(body)
+				logging.Error(err)
+				continue
+			} else {
+				for _, owner := range owners {
+					var u = new(models.User)
+					u.UserID = owner.ID
+					u.Login = owner.Login
+					u.Type = owner.Type
+					if err = u.Create(); err != nil {
+						logging.Error(err)
+						continue
+					}
 
-		var owners []resp.Owner
-		if err = json.Unmarshal([]byte(body), &owners); err != nil {
-			logging.Error(body)
-			logging.Error(err)
-			continue
-		} else {
-			for _, owner := range owners {
-				var u = new(models.User)
-				u.UserID = owner.ID
-				u.Login = owner.Login
-				u.Type = owner.Type
-				if err = u.Create(); err != nil {
-					logging.Error(err)
-					continue
-				}
-
-				var repoStargazers = new(models.RepoStargazers)
-				repoStargazers.UserID = owner.ID
-				repoStargazers.RepoID = repo.RepoID
-				repoStargazers.Version = stargazersVersion.String()
-				if err = repoStargazers.Create(); err != nil {
-					logging.Error(err)
-					continue
-				}
-				select {
-				case <-ctx.Done():
-					return
-				default:
+					var repoStargazers = new(models.RepoStargazers)
+					repoStargazers.UserID = owner.ID
+					repoStargazers.RepoID = repo.RepoID
+					repoStargazers.Version = stargazersVersion.String()
+					if err = repoStargazers.Create(); err != nil {
+						logging.Error(err)
+						continue
+					}
+					select {
+					case <-ctx.Done():
+						return
+					default:
+					}
 				}
 			}
-		}
-		if err = repo.Update(); err != nil {
-			logging.Error(err)
+			if err = repo.Update(); err != nil {
+				logging.Error(err)
+			}
 		}
 	}
 }

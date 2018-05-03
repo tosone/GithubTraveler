@@ -14,8 +14,8 @@ import (
 	"gopkg.in/satori/go.uuid.v1"
 )
 
-// repoWatchers get repo's watchers
-func repoWatchers(ctx context.Context, wg *sync.WaitGroup) {
+// repoIssues get repo's issues
+func repoIssues(ctx context.Context, wg *sync.WaitGroup) {
 	wg.Add(1)
 	defer wg.Done()
 
@@ -57,30 +57,34 @@ func repoWatchers(ctx context.Context, wg *sync.WaitGroup) {
 				continue
 			}
 
-			var owners []resp.Owner
-			if err = json.Unmarshal([]byte(body), &owners); err != nil {
+			var issues []resp.Issue
+			if err = json.Unmarshal([]byte(body), &issues); err != nil {
 				logging.Error(body)
 				logging.Error(err)
 				continue
 			} else {
-				for _, owner := range owners {
+				for _, issue := range issues {
+					var i = new(models.RepoIssues)
+					i.UserID = issue.User.ID
+					i.RepoID = repo.RepoID
+					i.Number = issue.Number
+					i.Comments = issue.Commits
+					i.Title = issue.Title
+					i.Body = issue.Body
+					if err = i.Create(); err != nil {
+						logging.Error(err)
+						continue
+					}
+
 					var u = new(models.User)
-					u.UserID = owner.ID
-					u.Login = owner.Login
-					u.Type = owner.Type
+					u.UserID = issue.User.ID
+					u.Login = issue.User.Login
+					u.Type = issue.User.Type
 					if err = u.Create(); err != nil {
 						logging.Error(err)
 						continue
 					}
 
-					var repoWatchers = new(models.RepoWatchers)
-					repoWatchers.UserID = owner.ID
-					repoWatchers.RepoID = repo.RepoID
-					repoWatchers.Version = watchersVersion.String()
-					if err = repoWatchers.Create(); err != nil {
-						logging.Error(err)
-						continue
-					}
 					select {
 					case <-ctx.Done():
 						return
