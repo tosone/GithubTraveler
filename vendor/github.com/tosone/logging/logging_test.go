@@ -67,17 +67,19 @@ func TestLevel_String(t *testing.T) {
 }
 
 func TestFileCannotBeWrite(t *testing.T) {
+	var gb = 1024 * 1024
+	var maxSize = 1
 	var conf = Config{
 		LogLevel:   DebugLevel,
 		Filename:   "test.log",
-		MaxSize:    1,
+		MaxSize:    maxSize,
 		MaxBackups: 2,
 		MaxAge:     30,
 		LocalTime:  true,
 		Compress:   true,
 	}
 	Setting(conf)
-	var arr = make([]byte, 1024*1024*4)
+	var arr = make([]byte, gb*maxSize)
 	rand.Read(arr)
 	Info(arr)
 }

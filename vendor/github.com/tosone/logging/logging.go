@@ -210,7 +210,7 @@ func (i *inst) output() {
 	sort.Strings(keys)
 
 	for _, key := range keys {
-		color := red
+		color := yellow
 		if key == "_line" || key == "_file" {
 			output += fmt.Sprintf(" \x1b[%dm%s\x1b[0m=%+v", color, key[1:], i.fields[key])
 		}
@@ -232,7 +232,7 @@ func (i *inst) output() {
 	fmt.Printf("\x1b[%dm%s\x1b[0m[%s] %-40v %s\n", color, levelText, i.time, msg, output)
 
 	i.fields["level"] = i.level.String()
-	i.fields["msg"] = i.msg
+	i.fields["msg"] = strings.TrimSuffix(strings.TrimPrefix(fmt.Sprint(i.msg...), "["), "]")
 	waitWrite, _ = json.Marshal(i.fields)
 	waitWrite = append(waitWrite, '\n')
 
