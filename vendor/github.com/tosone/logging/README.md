@@ -1,5 +1,4 @@
 # logging [![Build Status](https://travis-ci.org/tosone/logging.svg?branch=master)](https://travis-ci.org/tosone/logging) [![Coverage Status](https://coveralls.io/repos/github/tosone/logging/badge.svg?branch=master)](https://coveralls.io/github/tosone/logging?branch=master)
-------
 
 Example Code:
 ``` go
@@ -31,5 +30,4 @@ WARN[10:39:49.101] warn info                                 file=main.go line=1
 WARN[10:39:49.101] warn level                                file=main.go line=15 field1=1 field2=123
 DEBU[10:39:49.101] {123123123 1}                             file=main.go line=16
 DEBU[10:39:49.101] %+v {123123123 1}                         file=main.go line=17
-
 ```
