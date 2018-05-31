@@ -4,7 +4,7 @@ clone_folder: c:\gopath\src\github.com\EffDataAly\GithubTraveler
 
 environment:
   GOPATH: c:\gopath
-  GOVERSION: 1.10.1
+  GOVERSION: 1.10.2
 
 init:
   - git config --global core.autocrlf input
