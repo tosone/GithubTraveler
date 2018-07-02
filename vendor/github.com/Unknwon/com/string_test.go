@@ -17,8 +17,53 @@ package com
 import (
 	"testing"
 
+	"bytes"
+	"crypto/rand"
 	. "github.com/smartystreets/goconvey/convey"
 )
+
+func TestAESEncrypt(t *testing.T) {
+	t.Parallel()
+
+	key := make([]byte, 16) // AES-128
+	_, err := rand.Read(key)
+	if err != nil {
+		t.Fatal("Failed to create 128 bit AES key: " + err.Error())
+	}
+
+	plaintext := []byte("this will be encrypted")
+
+	_, err = AESGCMEncrypt(key, plaintext)
+	if err != nil {
+		t.Fatal("Failed to encrypt plaintext: " + err.Error())
+	}
+}
+
+func TestAESDecrypt(t *testing.T) {
+	t.Parallel()
+
+	key := make([]byte, 16) // AES-128
+	_, err := rand.Read(key)
+	if err != nil {
+		t.Fatal("Failed to create 128 bit AES key: " + err.Error())
+	}
+
+	plaintext := []byte("this will be encrypted")
+
+	ciphertext, err := AESGCMEncrypt(key, plaintext)
+	if err != nil {
+		t.Fatal("Failed to encrypt plaintext: " + err.Error())
+	}
+
+	decrypted, err := AESGCMDecrypt(key, ciphertext)
+	if err != nil {
+		t.Fatal("Failed to decrypt ciphertext: " + err.Error())
+	}
+
+	if bytes.Compare(decrypted, plaintext) != 0 {
+		t.Fatal("Decryption was not performed correctly")
+	}
+}
 
 func TestIsLetter(t *testing.T) {
 	if IsLetter('1') {
