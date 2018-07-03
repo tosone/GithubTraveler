@@ -29,5 +29,5 @@ Run the crawler:
 Run in docker:
 
 ``` bash
-% docker-compose up -d
+% cd docker/sqlite3 && docker-compose up -d --build
 ```
