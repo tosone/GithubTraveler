@@ -62,6 +62,7 @@ func Connect() (err error) {
 		new(UserFollowers),
 		new(RepoStargazers),
 		new(RepoWatchers),
+		new(RepoIssues),
 	).Error; err != nil {
 		logging.Panic(err.Error())
 	}
