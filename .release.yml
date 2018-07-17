@@ -11,3 +11,5 @@ Release:
   Files:
     - release/*
   Compress: true
+  CompressWith:
+    - config.yml
