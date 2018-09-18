@@ -10,8 +10,12 @@ func TestNew(t *testing.T) {
 	ht := New()
 	var list = []string{"a", "b", "c", "x", "y", "z"}
 	for _, n := range list {
-		ht.Set(n)
+		if err := ht.Set(n); err != nil {
+			log.Println(err)
+		}
 	}
-	ht.Remove("y")
+	if err := ht.Remove("y"); err != nil {
+		log.Println(err)
+	}
 	log.Println(ht.Get("y"))
 }

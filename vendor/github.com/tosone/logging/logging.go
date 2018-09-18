@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/fatih/color"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -45,14 +46,6 @@ func Setting(conf Config) {
 	logLevel = conf.LogLevel
 }
 
-const (
-	red    = 31
-	green  = 32
-	yellow = 33
-	blue   = 34
-	gray   = 37
-)
-
 // Fields ..
 type Fields map[string]interface{}
 
@@ -68,11 +61,17 @@ type inst struct {
 // Entry ..
 type Entry interface {
 	Panic(...interface{})
+	Panicf(string, ...interface{})
 	Fatal(...interface{})
+	Fatalf(string, ...interface{})
 	Error(...interface{})
+	Errorf(string, ...interface{})
 	Warn(...interface{})
+	Warnf(string, ...interface{})
 	Info(...interface{})
+	Infof(string, ...interface{})
 	Debug(...interface{})
+	Debugf(string, ...interface{})
 	withFields(Fields) *inst
 }
 
@@ -91,6 +90,22 @@ func (i *inst) withFields(fields Fields) *inst {
 	return i
 }
 
+func Panicf(format string, str ...interface{}) {
+	i := &inst{}
+	i.Panicf(format, str...)
+}
+
+// Panicf ..
+func (i *inst) Panicf(format string, str ...interface{}) {
+	if len(str) != 0 {
+		i.msg = []interface{}{fmt.Sprintf(format, str...)}
+	} else {
+		i.msg = []interface{}{format}
+	}
+	i.level = PanicLevel
+	i.output()
+}
+
 // Panic ..
 func Panic(str ...interface{}) {
 	i := &inst{}
@@ -101,6 +116,23 @@ func Panic(str ...interface{}) {
 func (i *inst) Panic(str ...interface{}) {
 	i.msg = str
 	i.level = PanicLevel
+	i.output()
+}
+
+// Fatalf ..
+func Fatalf(format string, str ...interface{}) {
+	i := &inst{}
+	i.Fatalf(format, str...)
+}
+
+// Fatalf ..
+func (i *inst) Fatalf(format string, str ...interface{}) {
+	if len(str) != 0 {
+		i.msg = []interface{}{fmt.Sprintf(format, str...)}
+	} else {
+		i.msg = []interface{}{format}
+	}
+	i.level = FatalLevel
 	i.output()
 }
 
@@ -117,6 +149,23 @@ func (i *inst) Fatal(str ...interface{}) {
 	i.output()
 }
 
+// Errorf ..
+func Errorf(format string, str ...interface{}) {
+	i := &inst{}
+	i.Errorf(format, str...)
+}
+
+// Errorf ..
+func (i *inst) Errorf(format string, str ...interface{}) {
+	if len(str) != 0 {
+		i.msg = []interface{}{fmt.Sprintf(format, str...)}
+	} else {
+		i.msg = []interface{}{format}
+	}
+	i.level = ErrorLevel
+	i.output()
+}
+
 // Error ..
 func Error(str ...interface{}) {
 	i := &inst{}
@@ -127,6 +176,23 @@ func Error(str ...interface{}) {
 func (i *inst) Error(str ...interface{}) {
 	i.msg = str
 	i.level = ErrorLevel
+	i.output()
+}
+
+// Warnf ..
+func Warnf(format string, str ...interface{}) {
+	i := &inst{}
+	i.Warnf(format, str...)
+}
+
+// Warnf ..
+func (i *inst) Warnf(format string, str ...interface{}) {
+	if len(str) != 0 {
+		i.msg = []interface{}{fmt.Sprintf(format, str...)}
+	} else {
+		i.msg = []interface{}{format}
+	}
+	i.level = WarnLevel
 	i.output()
 }
 
@@ -143,6 +209,23 @@ func (i *inst) Warn(str ...interface{}) {
 	i.output()
 }
 
+// Infof ..
+func Infof(format string, str ...interface{}) {
+	i := &inst{}
+	i.Infof(format, str...)
+}
+
+// Info ..
+func (i *inst) Infof(format string, str ...interface{}) {
+	if len(str) != 0 {
+		i.msg = []interface{}{fmt.Sprintf(format, str...)}
+	} else {
+		i.msg = []interface{}{format}
+	}
+	i.level = InfoLevel
+	i.output()
+}
+
 // Info ..
 func Info(str ...interface{}) {
 	i := &inst{}
@@ -153,6 +236,23 @@ func Info(str ...interface{}) {
 func (i *inst) Info(str ...interface{}) {
 	i.msg = str
 	i.level = InfoLevel
+	i.output()
+}
+
+// Debugf ..
+func Debugf(format string, str ...interface{}) {
+	i := &inst{}
+	i.Debugf(format, str...)
+}
+
+// Debugf ..
+func (i *inst) Debugf(format string, str ...interface{}) {
+	if len(str) != 0 {
+		i.msg = []interface{}{fmt.Sprintf(format, str...)}
+	} else {
+		i.msg = []interface{}{format}
+	}
+	i.level = DebugLevel
 	i.output()
 }
 
@@ -170,20 +270,20 @@ func (i *inst) Debug(str ...interface{}) {
 }
 
 func (i *inst) output() {
-	var color int
+	var colorFun func(...interface{}) string
 	var waitWrite []byte
 	if i.level < logLevel {
 		return
 	}
 	switch i.level {
 	case DebugLevel:
-		color = gray
+		colorFun = color.New(color.FgHiWhite).SprintFunc()
 	case WarnLevel:
-		color = yellow
+		colorFun = color.New(color.FgHiYellow).SprintFunc()
 	case ErrorLevel, FatalLevel, PanicLevel:
-		color = red
+		colorFun = color.New(color.FgHiRed).SprintFunc()
 	default:
-		color = blue
+		colorFun = color.New(color.FgHiBlue).SprintFunc()
 	}
 	levelText := strings.ToUpper(i.level.String())[0:4]
 	var output string
@@ -210,16 +310,16 @@ func (i *inst) output() {
 	sort.Strings(keys)
 
 	for _, key := range keys {
-		color := yellow
+		yellow := color.New(color.FgYellow).SprintFunc()
 		if key == "_line" || key == "_file" {
-			output += fmt.Sprintf(" \x1b[%dm%s\x1b[0m=%+v", color, key[1:], i.fields[key])
+			output += fmt.Sprintf(" %s=%+v", yellow(key[1:]), i.fields[key])
 		}
 	}
 
 	for _, key := range keys {
+		green := color.New(color.FgGreen).SprintFunc()
 		if key != "_line" && key != "_file" && key != "__time" {
-			color := green
-			output += fmt.Sprintf(" \x1b[%dm%s\x1b[0m=%+v", color, key, i.fields[key])
+			output += fmt.Sprintf(" %s=%+v", green(key), i.fields[key])
 		}
 	}
 
@@ -229,7 +329,7 @@ func (i *inst) output() {
 		msg = "msg is too long and cannot be display"
 	}
 
-	fmt.Printf("\x1b[%dm%s\x1b[0m[%s] %-40v %s\n", color, levelText, i.time, msg, output)
+	fmt.Printf("%s[%s] %-40v %s\n", colorFun(levelText), i.time, msg, output)
 
 	i.fields["level"] = i.level.String()
 	i.fields["msg"] = strings.TrimSuffix(strings.TrimPrefix(fmt.Sprint(i.msg...), "["), "]")
