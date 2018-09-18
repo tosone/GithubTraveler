@@ -1,6 +1,6 @@
-FROM alpine:3.7
+FROM alpine:3.9
 
-LABEL maintainer=i@tosiney.com
+LABEL maintainer=tosonev@gmail.com
 
 ARG GOPATH=/data/gocode
 ARG CONFIG=config.yml

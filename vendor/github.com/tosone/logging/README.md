@@ -18,7 +18,7 @@ func main() {
 	logging.Warn("warn info")
 	logging.WithFields(logging.Fields{"field1": 1, "field2": "123"}).Warn("warn level")
 	logging.Debug(test)
-	logging.Debug("%+v", test) // not support this
+	logging.Debugf("%+v", test)
 }
 ```
 
@@ -29,5 +29,5 @@ INFO[10:39:49.101] info level                                file=main.go line=1
 WARN[10:39:49.101] warn info                                 file=main.go line=14
 WARN[10:39:49.101] warn level                                file=main.go line=15 field1=1 field2=123
 DEBU[10:39:49.101] {123123123 1}                             file=main.go line=16
-DEBU[10:39:49.101] %+v {123123123 1}                         file=main.go line=17
+DEBU[10:39:49.101] {String:123123123, Int:1}                 file=main.go line=17
 ```

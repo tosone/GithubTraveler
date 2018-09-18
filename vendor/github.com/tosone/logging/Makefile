@@ -9,4 +9,4 @@ coverage: clean
 	go tool cover -html=coverage.out -o coverage.html
 
 clean:
-	-rm *.log *.log.gz *.out *.html
+	$(RM) *.log *.log.gz *.out *.html

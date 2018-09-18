@@ -85,7 +85,7 @@ func isPrintable(s string) bool {
 	return true
 }
 
-var sqlRegexp = regexp.MustCompile(`\?`)
+var sqlRegexp = regexp.MustCompile(`\?`) // nolint
 var numericPlaceHolderRegexp = regexp.MustCompile(`\$\d+`)
 
 // Print ..
