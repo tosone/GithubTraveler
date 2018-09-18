@@ -18,12 +18,9 @@ install:
   - go env
   - go get -u -v gopkg.in/alecthomas/gometalinter.v2
   - gometalinter.v2 --install
-  - go get -u -v github.com/GoASTScanner/gas/cmd/gas/...
-  - go get -u -v github.com/client9/misspell/cmd/misspell
   - copy c:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin\mingw32-make.exe c:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin\make.exe
   - copy c:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin\x86_64-w64-mingw32-gcc.exe c:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
   - make --version
 
 build_script:
-  - make lint
   - make
