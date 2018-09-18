@@ -1,17 +1,14 @@
 language: go
 go:
-  - 1.10.3
+  - 1.11.x
 before_install:
   - sudo apt-get -qq update
 before_script:
   - go get -u -v gopkg.in/alecthomas/gometalinter.v2
   - gometalinter.v2 --install
-  - go get -u -v github.com/GoASTScanner/gas/cmd/gas/...
-  - go get -u -v github.com/client9/misspell/cmd/misspell
   - go get -u -v github.com/karalabe/xgo
   - go get -u -v github.com/tosone/release2github
 script:
-  - make lint
   - make
 notifications:
   slack:

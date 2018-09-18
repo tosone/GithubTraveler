@@ -3,7 +3,7 @@
   "enable": [
     "deadcode",
     "errcheck",
-    "gas",
+    "gosec",
     "goconst",
     "gocyclo",
     "gofmt",
@@ -13,6 +13,7 @@
     "ineffassign",
     "interfacer",
     "lll",
+    "misspell",
     "megacheck",
     "structcheck",
     "unconvert",
