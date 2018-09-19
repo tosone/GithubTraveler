@@ -1,6 +1,8 @@
 language: go
 go:
   - 1.11.x
+env:
+  - GO111MODULE=off
 before_install:
   - sudo apt-get -qq update
 before_script:
@@ -9,6 +11,8 @@ before_script:
   - go get -u -v github.com/karalabe/xgo
   - go get -u -v github.com/tosone/release2github
 script:
+  - make lint
+  - make misspell-check
   - make
 notifications:
   slack:

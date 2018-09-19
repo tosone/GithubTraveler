@@ -1,13 +1,11 @@
 package downloader
 
 import (
+	"errors"
 	"fmt"
 	"net/url"
-	"time"
-
 	"strconv"
-
-	"errors"
+	"time"
 
 	"github.com/EffDataAly/GithubTraveler/common/htexpire"
 	"github.com/EffDataAly/GithubTraveler/models"
@@ -36,7 +34,10 @@ func Get(num int, params ...string) (body string, nextNum int, err error) {
 	}
 	logging.Info(fmt.Sprintf("crawlerName: %s", crawlerName))
 
-	if b, _ := ht.Get(requestURL); b {
+	var b bool
+	if b, err = ht.Get(requestURL); err != nil {
+		return
+	} else if b {
 		err = errors.New("too frequently request same url")
 		return
 	}

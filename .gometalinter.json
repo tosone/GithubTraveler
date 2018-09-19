@@ -1,5 +1,4 @@
 {
-  "deadline": "10m",
   "enable": [
     "deadcode",
     "errcheck",
@@ -13,7 +12,6 @@
     "ineffassign",
     "interfacer",
     "lll",
-    "misspell",
     "megacheck",
     "structcheck",
     "unconvert",
@@ -25,11 +23,5 @@
   "lineLength": 200,
   "vendor": true,
   "vendoredLinters": false,
-  "cyclo": 25,
-  "Linters": {
-    "misspell": {
-      "Command": "misspell -i Unknwon",
-      "Pattern": "*"
-    }
-  }
+  "cyclo": 25
 }
