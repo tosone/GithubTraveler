@@ -2,12 +2,10 @@ package crawler
 
 import (
 	"context"
-	"os"
-	"os/signal"
-	"sync"
 
-	"github.com/EffDataAly/GithubTraveler/common/request/repo"
-	"github.com/EffDataAly/GithubTraveler/models"
+	"github.com/EffDataAly/GithubTraveler/cmd/crawler/rate"
+	"github.com/EffDataAly/GithubTraveler/cmd/crawler/user"
+	"github.com/EffDataAly/GithubTraveler/database"
 	"github.com/google/go-github/github"
 	"github.com/spf13/viper"
 	"github.com/tosone/logging"
@@ -15,43 +13,24 @@ import (
 )
 
 // Initialize crawler entry
-func Initialize() {
-	var err error
-	if err = models.Connect(); err != nil {
-		logging.Fatal(err)
+func Initialize() (err error) {
+	if err = database.Connect(); err != nil {
+		return
 	}
-	user := new(models.User)
-	user.Login = viper.GetString("Crawler.Entrance")
-	if err = user.Create(); err != nil {
-		logging.Fatal(err)
+	var ctx = context.Background()
+	var client = github.NewClient(oauth2.NewClient(ctx,
+		oauth2.StaticTokenSource(&oauth2.Token{AccessToken: viper.GetString("AccessToken")}),
+	))
+	if err = rate.Initialize(ctx, client); err != nil {
+		return
 	}
-
-	ctx, ctxCancel := context.WithCancel(context.Background())
-	var wgAll = new(sync.WaitGroup)
-
-	// go infoRepo(ctx, wgAll)
-	// go infoUser(ctx, wgAll)
-
-	// go userFollowers(ctx, wgAll)
-	// go userFollowing(ctx, wgAll)
-	// go userRepos(ctx, wgAll)
-	// go userStarred(ctx, wgAll)
-	// go userSubscriptions(ctx, wgAll)
-
-	// go repoStargazers(ctx, wgAll)
-	// go repoWatchers(ctx, wgAll)
-	// go repoIssues(ctx, wgAll)
-
-	// go issueComments(ctx, wgAll)
-
-	var tc = oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{AccessToken: "c77d41f2027f009d0cb088068e86d6465c3ddaf0"}))
-	var client = github.NewClient(tc)
-	go repo.Repo(ctx, client, "", 0)
-
-	signalChannel := make(chan os.Signal, 1)
-	signal.Notify(signalChannel, os.Interrupt)
-	<-signalChannel // catch the ctrl-c
-	ctxCancel()     // stop all of the crawlers
-	wgAll.Wait()    // wait the crawler stopped
-	logging.Info("Exit correctly already.")
+	// if err = repo.List(ctx, client, ""); err != nil {
+	// 	logging.Error(err)
+	// 	return
+	// }
+	if err = user.Followers(ctx, client, "tosone"); err != nil {
+		logging.Error(err)
+		return
+	}
+	return
 }

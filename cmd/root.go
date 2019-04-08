@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/EffDataAly/GithubTraveler/cmd/crawler-new"
+	"github.com/EffDataAly/GithubTraveler/cmd/crawler"
 	"github.com/EffDataAly/GithubTraveler/cmd/version"
 	"github.com/EffDataAly/GithubTraveler/common"
 	"github.com/Unknwon/com"
