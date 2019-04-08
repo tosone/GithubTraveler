@@ -1,5 +1,4 @@
-ClientID: 3d032602cc3318f720bf # github app client ID
-ClientSecret: 8e7f4a421ce4183bcc4ffb16991942c18cd0c9b6 # github app client secret
+AccessToken: c77d41f2027f009d0cb088068e86d6465c3ddaf0 # access token
 Crawler:
   Entrance: tosone # crawler entrance that one of github user
   Timeout: 10 # request github timeout

@@ -29,7 +29,7 @@ func infoRepo(ctx context.Context, wg *sync.WaitGroup) {
 		}
 		num++
 		var repo = new(models.Repo)
-		if repo, err = new(models.Repo).FindByID(num); err != nil {
+		if err = repo.FindByID(num); err != nil {
 			if err == gorm.ErrRecordNotFound && num == 1 {
 				time.Sleep(time.Second * 30)
 			}
