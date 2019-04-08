@@ -43,7 +43,7 @@ func List(ctx context.Context, client *github.Client, user string, page ...int) 
 		}
 		var repoForksCount = &models.RepoForksCount{RepoID: *repo.ID, Num: *repo.ForksCount}
 		if repo.ForksCount != nil {
-			if err = repoForksCount.Create(); err != nil {
+			if err = repoForksCount.Upsert(); err != nil {
 				return
 			}
 		}
@@ -53,19 +53,19 @@ func List(ctx context.Context, client *github.Client, user string, page ...int) 
 		}
 		var repoNetworkCount = &models.RepoNetworkCount{RepoID: *repo.ID, Num: repoNetworkCountNum}
 		if repo.NetworkCount != nil {
-			if err = repoNetworkCount.Create(); err != nil {
+			if err = repoNetworkCount.Upsert(); err != nil {
 				return
 			}
 		}
 		var repoOpenIssuesCount = &models.RepoOpenIssuesCount{RepoID: *repo.ID, Num: *repo.OpenIssuesCount}
 		if repo.OpenIssuesCount != nil {
-			if err = repoOpenIssuesCount.Create(); err != nil {
+			if err = repoOpenIssuesCount.Upsert(); err != nil {
 				return
 			}
 		}
 		var repoStargazersCount = &models.RepoStargazersCount{RepoID: *repo.ID, Num: *repo.StargazersCount}
 		if repo.StargazersCount != nil {
-			if err = repoStargazersCount.Create(); err != nil {
+			if err = repoStargazersCount.Upsert(); err != nil {
 				return
 			}
 		}
@@ -75,13 +75,13 @@ func List(ctx context.Context, client *github.Client, user string, page ...int) 
 		}
 		var repoSubscribersCount = &models.RepoSubscribersCount{RepoID: *repo.ID, Num: repoSubscribersCountNum}
 		if repo.SubscribersCount != nil {
-			if err = repoSubscribersCount.Create(); err != nil {
+			if err = repoSubscribersCount.Upsert(); err != nil {
 				return
 			}
 		}
 		var repoWatchersCount = &models.RepoWatchersCount{RepoID: *repo.ID, Num: *repo.WatchersCount}
 		if repo.WatchersCount != nil {
-			if err = repoWatchersCount.Create(); err != nil {
+			if err = repoWatchersCount.Upsert(); err != nil {
 				return
 			}
 		}
@@ -122,7 +122,7 @@ func List(ctx context.Context, client *github.Client, user string, page ...int) 
 			License:          license,
 		}
 
-		if err = r.Create(); err != nil {
+		if err = r.Upsert(); err != nil {
 			return
 		}
 	}

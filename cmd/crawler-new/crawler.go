@@ -24,10 +24,10 @@ func Initialize() (err error) {
 	if err = rate.Initialize(ctx, client); err != nil {
 		return
 	}
-	// if err = repo.List(ctx, client, ""); err != nil {
-	// 	logging.Error(err)
-	// 	return
-	// }
+	if err = repo.List(ctx, client, ""); err != nil {
+		logging.Error(err)
+		return
+	}
 	if err = repo.Watchers(ctx, client, "tosone", "minimp3"); err != nil {
 		logging.Error(err)
 		return

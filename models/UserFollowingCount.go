@@ -2,42 +2,20 @@ package models
 
 import "github.com/jinzhu/gorm"
 
-// UserFollowingCount ..
+// UserFollowingCount followers
 type UserFollowingCount struct {
 	gorm.Model
 	UserID int64
 	Num    int
 }
 
-// Create ..
-// func (f *UserFollowing) Create() (err error) {
-// 	var isExist bool
-// 	if isExist, err = f.IsExist(); err != nil {
-// 		return
-// 	} else if isExist {
-// 		err = f.Update()
-// 	} else {
-// 		err = engine.Create(f).Error
-// 	}
-// 	return
-// }
-
-// // IsExist ..
-// func (f *UserFollowing) IsExist() (isExist bool, err error) {
-// 	var count int
-// 	if err = engine.Model(new(UserFollowing)).
-// 		Where(UserFollowing{UserID: f.UserID, FollowingUserID: f.FollowingUserID}).
-// 		Count(&count).Error; err != nil {
-// 		return
-// 	}
-// 	if count != 0 {
-// 		isExist = true
-// 		return
-// 	}
-// 	return
-// }
-
-// // Update ..
-// func (f *UserFollowing) Update() (err error) {
-// 	return
-// }
+// Create find or create new record
+func (s *UserFollowingCount) Upsert() (err error) {
+	if err = engine.Model(new(UserFollowingCount)).Where(UserFollowingCount{
+		UserID: s.UserID,
+		Num:    s.Num,
+	}).First(s).Error; err == gorm.ErrRecordNotFound {
+		err = engine.Create(s).Error
+	}
+	return
+}

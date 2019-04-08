@@ -9,17 +9,13 @@ type RepoForksCount struct {
 	Num    int
 }
 
-// Create find or create new record
-func (s *RepoForksCount) Create() (err error) {
+// Upsert find or create new record
+func (s *RepoForksCount) Upsert() (err error) {
 	if err = engine.Model(new(RepoForksCount)).Where(RepoForksCount{
 		RepoID: s.RepoID,
 		Num:    s.Num,
 	}).First(s).Error; err == gorm.ErrRecordNotFound {
-		if err = engine.Create(s).Error; err != nil {
-			return
-		}
-	} else if err != nil {
-		return
+		err = engine.Create(s).Error
 	}
 	return
 }
