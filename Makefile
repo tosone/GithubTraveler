@@ -1,4 +1,4 @@
-BuildStamp = $(shell date '+%Y-%m-%d_%H:%M:%S')
+BuildStamp = $(shell date '+%Y%m%d%H%M%S')
 GitHash    = $(shell git rev-parse HEAD)
 Version    = $(shell git describe --abbrev=0 --tags --always)
 Target     = $(shell basename $(abspath $(dir $$PWD)))

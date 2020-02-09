@@ -74,19 +74,19 @@ func Followers(ctx context.Context, client *github.Client, u string, page ...int
 			Bio:        user.Bio,
 			// PublicRepos             *int
 			// PublicGists             *int
-			Followers:               *userFollowersCount,
-			Following:               *userFollowingCount,
-			CreatedAt:               user.CreatedAt,
-			UpdatedAt:               user.UpdatedAt,
-			SuspendedAt:             user.SuspendedAt,
-			Type:                    user.Type,
-			SiteAdmin:               user.SiteAdmin,
-			TotalPrivateRepos:       user.TotalPrivateRepos,
-			OwnedPrivateRepos:       user.OwnedPrivateRepos,
-			PrivateGists:            user.PrivateGists,
-			DiskUsage:               user.DiskUsage,
-			Collaborators:           user.Collaborators,
-			TwoFactorAuthentication: user.TwoFactorAuthentication,
+			Followers:         *userFollowersCount,
+			Following:         *userFollowingCount,
+			CreatedAt:         user.CreatedAt,
+			UpdatedAt:         user.UpdatedAt,
+			SuspendedAt:       user.SuspendedAt,
+			Type:              user.Type,
+			SiteAdmin:         user.SiteAdmin,
+			TotalPrivateRepos: user.TotalPrivateRepos,
+			OwnedPrivateRepos: user.OwnedPrivateRepos,
+			PrivateGists:      user.PrivateGists,
+			DiskUsage:         user.DiskUsage,
+			Collaborators:     user.Collaborators,
+			//TwoFactorAuthentication: user.TwoFactorAuthentication,
 		}
 		if err = u.Upsert(); err != nil {
 			return
