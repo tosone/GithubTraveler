@@ -34,7 +34,9 @@ var crawlerCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(0),
 	Run: func(_ *cobra.Command, _ []string) {
 		initConfig()
-		crawler.Initialize()
+		if err := crawler.Initialize(); err != nil {
+			logging.Fatal(err)
+		}
 	},
 }
 

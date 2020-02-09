@@ -27,12 +27,6 @@ authors:
 lint:
 	golangci-lint run -v
 
-misspell-check:
-	@hash misspell > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		go get -u github.com/client9/misspell/cmd/misspell; \
-	fi
-	misspell -error -i unknwon $(GOFILES)
-
 clean:
 	-rm -rf release *.db *.db-journal
 

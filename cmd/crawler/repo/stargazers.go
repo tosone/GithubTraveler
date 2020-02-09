@@ -3,10 +3,11 @@ package repo
 import (
 	"context"
 
+	"github.com/google/go-github/github"
+
 	"github.com/EffDataAly/GithubTraveler/cmd/crawler/rate"
 	"github.com/EffDataAly/GithubTraveler/common/util"
 	"github.com/EffDataAly/GithubTraveler/tables"
-	"github.com/google/go-github/github"
 )
 
 // Stargazers ..
@@ -60,34 +61,33 @@ func Stargazers(ctx context.Context, client *github.Client, u string, r string, 
 		}
 
 		var u = &tables.User{
-			UserID:     stargazer.User.ID,
-			Login:      stargazer.User.Login,
-			NodeID:     stargazer.User.NodeID,
-			AvatarURL:  stargazer.User.AvatarURL,
-			HTMLURL:    stargazer.User.HTMLURL,
-			GravatarID: stargazer.User.GravatarID,
-			Name:       stargazer.User.Name,
-			Company:    stargazer.User.Company,
-			Blog:       stargazer.User.Blog,
-			Location:   stargazer.User.Location,
-			Email:      stargazer.User.Email,
-			Hireable:   stargazer.User.Hireable,
-			Bio:        stargazer.User.Bio,
-			// PublicRepos             *int
-			// PublicGists             *int
-			Followers:               *userFollowersCount,
-			Following:               *userFollowingCount,
-			CreatedAt:               stargazer.User.CreatedAt,
-			UpdatedAt:               stargazer.User.UpdatedAt,
-			SuspendedAt:             stargazer.User.SuspendedAt,
-			Type:                    stargazer.User.Type,
-			SiteAdmin:               stargazer.User.SiteAdmin,
-			TotalPrivateRepos:       stargazer.User.TotalPrivateRepos,
-			OwnedPrivateRepos:       stargazer.User.OwnedPrivateRepos,
-			PrivateGists:            stargazer.User.PrivateGists,
-			DiskUsage:               stargazer.User.DiskUsage,
-			Collaborators:           stargazer.User.Collaborators,
-			TwoFactorAuthentication: stargazer.User.TwoFactorAuthentication,
+			UserID:            stargazer.User.ID,
+			Login:             stargazer.User.Login,
+			NodeID:            stargazer.User.NodeID,
+			AvatarURL:         stargazer.User.AvatarURL,
+			HTMLURL:           stargazer.User.HTMLURL,
+			GravatarID:        stargazer.User.GravatarID,
+			Name:              stargazer.User.Name,
+			Company:           stargazer.User.Company,
+			Blog:              stargazer.User.Blog,
+			Location:          stargazer.User.Location,
+			Email:             stargazer.User.Email,
+			Hireable:          stargazer.User.Hireable,
+			Bio:               stargazer.User.Bio,
+			PublicRepos:       stargazer.User.PublicRepos,
+			PublicGists:       stargazer.User.PublicGists,
+			Followers:         *userFollowersCount,
+			Following:         *userFollowingCount,
+			CreatedAt:         stargazer.User.CreatedAt,
+			UpdatedAt:         stargazer.User.UpdatedAt,
+			SuspendedAt:       stargazer.User.SuspendedAt,
+			Type:              stargazer.User.Type,
+			SiteAdmin:         stargazer.User.SiteAdmin,
+			TotalPrivateRepos: stargazer.User.TotalPrivateRepos,
+			OwnedPrivateRepos: stargazer.User.OwnedPrivateRepos,
+			PrivateGists:      stargazer.User.PrivateGists,
+			DiskUsage:         stargazer.User.DiskUsage,
+			Collaborators:     stargazer.User.Collaborators,
 		}
 		if err = u.Upsert(); err != nil {
 			return
