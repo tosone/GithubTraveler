@@ -1,13 +1,14 @@
 package cmd
 
 import (
-	"github.com/EffDataAly/GithubTraveler/cmd/crawler"
-	"github.com/EffDataAly/GithubTraveler/cmd/version"
-	"github.com/EffDataAly/GithubTraveler/common"
-	"github.com/Unknwon/com"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/tosone/logging"
+	"github.com/unknwon/com"
+
+	"github.com/EffDataAly/GithubTraveler/cmd/crawler"
+	"github.com/EffDataAly/GithubTraveler/cmd/version"
+	"github.com/EffDataAly/GithubTraveler/common"
 )
 
 // RootCmd represents the base command when called without any sub commands
