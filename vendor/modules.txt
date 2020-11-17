@@ -1,11 +1,19 @@
-# github.com/Unknwon/com v0.0.0-20190321035513-0fed4efef755
-github.com/Unknwon/com
+# github.com/denisenkom/go-mssqldb v0.9.0
+## explicit
+# github.com/elazarl/goproxy v0.0.0-20201021153353-00ad82a08272
+## explicit
+# github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5
+## explicit
 # github.com/fatih/color v1.10.0
+## explicit
 github.com/fatih/color
 # github.com/fsnotify/fsnotify v1.4.7
 github.com/fsnotify/fsnotify
 # github.com/go-sql-driver/mysql v1.4.1
+## explicit
 github.com/go-sql-driver/mysql
+# github.com/gofrs/uuid v3.3.0+incompatible
+## explicit
 # github.com/hashicorp/hcl v1.0.0
 github.com/hashicorp/hcl
 github.com/hashicorp/hcl/hcl/ast
@@ -18,12 +26,18 @@ github.com/hashicorp/hcl/json/parser
 github.com/hashicorp/hcl/json/scanner
 github.com/hashicorp/hcl/json/token
 # github.com/inconshreveable/mousetrap v1.0.0
+## explicit
 github.com/inconshreveable/mousetrap
 # github.com/jinzhu/gorm v1.9.2
+## explicit
 github.com/jinzhu/gorm
 # github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a
+## explicit
 github.com/jinzhu/inflection
+# github.com/jinzhu/now v1.1.1
+## explicit
 # github.com/lib/pq v1.0.0
+## explicit
 github.com/lib/pq
 github.com/lib/pq/oid
 # github.com/magiconair/properties v1.8.0
@@ -33,16 +47,20 @@ github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.12
 github.com/mattn/go-isatty
 # github.com/mattn/go-sqlite3 v1.10.0
+## explicit
 github.com/mattn/go-sqlite3
 # github.com/mitchellh/mapstructure v1.1.2
 github.com/mitchellh/mapstructure
 # github.com/moul/http2curl v1.0.0
+## explicit
 github.com/moul/http2curl
 # github.com/parnurzeal/gorequest v0.2.15
+## explicit
 github.com/parnurzeal/gorequest
 # github.com/pelletier/go-toml v1.2.0
 github.com/pelletier/go-toml
 # github.com/pkg/errors v0.8.1
+## explicit
 github.com/pkg/errors
 # github.com/spf13/afero v1.1.2
 github.com/spf13/afero
@@ -50,28 +68,38 @@ github.com/spf13/afero/mem
 # github.com/spf13/cast v1.3.0
 github.com/spf13/cast
 # github.com/spf13/cobra v0.0.3
+## explicit
 github.com/spf13/cobra
 # github.com/spf13/jwalterweatherman v1.0.0
 github.com/spf13/jwalterweatherman
 # github.com/spf13/pflag v1.0.3
 github.com/spf13/pflag
 # github.com/spf13/viper v1.3.2
+## explicit
 github.com/spf13/viper
 # github.com/tosone/logging v1.2.1
+## explicit
 github.com/tosone/logging
+# github.com/unknwon/com v1.0.1
+## explicit
+github.com/unknwon/com
 # golang.org/x/net v0.0.0-20190328230028-74de082e2cca
+## explicit
 golang.org/x/net/publicsuffix
 # golang.org/x/sys v0.0.0-20201116194326-cc9327a14d48
+## explicit
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 # golang.org/x/text v0.3.0
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
 # google.golang.org/appengine v1.5.0
+## explicit
 google.golang.org/appengine/cloudsql
 # gopkg.in/natefinch/lumberjack.v2 v2.0.0
 gopkg.in/natefinch/lumberjack.v2
 # gopkg.in/satori/go.uuid.v1 v1.2.0
+## explicit
 gopkg.in/satori/go.uuid.v1
 # gopkg.in/yaml.v2 v2.2.7
 gopkg.in/yaml.v2
