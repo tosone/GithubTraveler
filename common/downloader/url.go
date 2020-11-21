@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/EffDataAly/GithubTraveler/common"
+	"github.com/tosone/GithubTraveler/common"
 )
 
 // urlSwitch get request url

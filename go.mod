@@ -1,4 +1,4 @@
-module github.com/EffDataAly/GithubTraveler
+module github.com/tosone/GithubTraveler
 
 go 1.15
 

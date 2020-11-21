@@ -6,9 +6,9 @@ import (
 	"github.com/tosone/logging"
 	"github.com/unknwon/com"
 
-	"github.com/EffDataAly/GithubTraveler/cmd/crawler"
-	"github.com/EffDataAly/GithubTraveler/cmd/version"
-	"github.com/EffDataAly/GithubTraveler/common"
+	"github.com/tosone/GithubTraveler/cmd/crawler"
+	"github.com/tosone/GithubTraveler/cmd/version"
+	"github.com/tosone/GithubTraveler/common"
 )
 
 // RootCmd represents the base command when called without any sub commands

@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/EffDataAly/GithubTraveler/cmd"
-	"github.com/EffDataAly/GithubTraveler/cmd/version"
+	"github.com/tosone/GithubTraveler/cmd"
+	"github.com/tosone/GithubTraveler/cmd/version"
+
 	"github.com/tosone/logging"
 
 	_ "github.com/go-sql-driver/mysql"

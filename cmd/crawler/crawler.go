@@ -6,8 +6,8 @@ import (
 	"os/signal"
 	"sync"
 
-	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/spf13/viper"
+	"github.com/tosone/GithubTraveler/models"
 	"github.com/tosone/logging"
 )
 

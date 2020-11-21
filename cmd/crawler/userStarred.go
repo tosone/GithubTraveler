@@ -6,13 +6,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/EffDataAly/GithubTraveler/common/downloader"
-	"github.com/EffDataAly/GithubTraveler/common/resp"
-	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/jinzhu/gorm"
 	"github.com/spf13/viper"
+	"github.com/tosone/GithubTraveler/common/downloader"
+	"github.com/tosone/GithubTraveler/common/resp"
+	"github.com/tosone/GithubTraveler/models"
 	"github.com/tosone/logging"
-	"gopkg.in/satori/go.uuid.v1"
+	uuid "gopkg.in/satori/go.uuid.v1"
 )
 
 // userStarred get all of specified user's starred repos

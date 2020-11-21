@@ -7,10 +7,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/EffDataAly/GithubTraveler/common/htexpire"
-	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/parnurzeal/gorequest"
 	"github.com/spf13/viper"
+	"github.com/tosone/GithubTraveler/common/htexpire"
+	"github.com/tosone/GithubTraveler/models"
 	"github.com/tosone/logging"
 )
 

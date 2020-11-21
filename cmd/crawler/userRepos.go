@@ -6,11 +6,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/EffDataAly/GithubTraveler/common/downloader"
-	"github.com/EffDataAly/GithubTraveler/common/resp"
-	"github.com/EffDataAly/GithubTraveler/models"
 	"github.com/jinzhu/gorm"
 	"github.com/spf13/viper"
+	"github.com/tosone/GithubTraveler/common/downloader"
+	"github.com/tosone/GithubTraveler/common/resp"
+	"github.com/tosone/GithubTraveler/models"
 	"github.com/tosone/logging"
 )
 
