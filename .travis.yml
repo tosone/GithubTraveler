@@ -4,8 +4,8 @@ go:
 before_install:
   - sudo apt-get -qq update
 before_script:
-  - go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.32.2
-  - go get github.com/tosone/release@master
+  - go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.32.2
+  - go install github.com/tosone/release@master
 script:
   - go mod download
   - make lint
